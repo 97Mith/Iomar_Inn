@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        NewCompanyWindow newCompanyWindow = new NewCompanyWindow(new CompanyEntity());
+        NewCompanyWindow newCompanyWindow = new NewCompanyWindow(new CompanyEntity(), false);
 
         newCompanyWindow.setVisible(true);
     }

@@ -73,9 +73,9 @@ public class CompanyService {
         return tableModel;
     }
 
-    public static boolean isCompanyUnique(String corporateReason, String cnpj) {
+    public static boolean isCompanyUnique(String corporateReason, String cnpj, boolean isEditmode, Integer idCompany) {
         List<CompanyEntity> companies = getAll();
-
+        if(isEditmode) deleteJustForAMethod(companies, idCompany);
         boolean reasonExists = companies.stream()
                 .anyMatch(c -> c.getCorporateReason().equals(corporateReason));
 

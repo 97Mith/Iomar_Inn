@@ -23,7 +23,7 @@ public class NewCompanyWindow extends JFrame {
     private final JTextField textFieldEmail;
     //private List<CompanyEntity> companies = CompanyService.getAll();
 
-    public NewCompanyWindow(CompanyEntity company) {
+    public NewCompanyWindow(CompanyEntity company, boolean isEditMode) {
 
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -155,7 +155,8 @@ public class NewCompanyWindow extends JFrame {
 
             if(CompanyService.validateFields(cName, cCr, cCnpj, cSi, cPn, cEmail)){
 
-                if(!CompanyService.isCompanyUnique(cCr, cCnpj)){ return;}
+                assert company != null;
+                if(!CompanyService.isCompanyUnique(cCr, cCnpj, isEditMode, company.getId())){ return;}
 
                 CompanyEntity c = new CompanyEntity(cName, cCr, cCnpj, cSi, cPn, cEmail);
                 CompanyService.createOrUpdate(c);
