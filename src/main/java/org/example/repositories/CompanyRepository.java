@@ -1,0 +1,68 @@
+package org.example.repositories;
+
+import org.example.entities.CompanyEntity;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.swing.*;
+import java.util.List;
+
+public class CompanyRepository {
+    static EntityManagerFactory emf = Persistence.createEntityManagerFactory("unit-jpa");
+
+    public static void update(CompanyEntity company) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(company);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+
+    public static CompanyEntity findById(Integer id) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.find(CompanyEntity.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public static List<CompanyEntity> findAll() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery("SELECT c FROM CompanyEntity c", CompanyEntity.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public static void delete(Integer companyId) {
+        EntityManager em = emf.createEntityManager();
+
+        em.getTransaction().begin();
+
+        CompanyEntity company = em.find(CompanyEntity.class, companyId);
+        try{
+            if (company != null) {
+                em.remove(company);
+                em.getTransaction().commit();
+
+                JOptionPane.showMessageDialog(
+                        null, "Empresa deletada com sucesso.",
+                        "Aviso", JOptionPane.INFORMATION_MESSAGE
+                );
+            } else {
+                em.getTransaction().rollback();
+            }
+        }finally {
+            em.close();
+        }
+    }
+}
