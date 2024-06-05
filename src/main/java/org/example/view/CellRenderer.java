@@ -35,4 +35,14 @@ public class CellRenderer extends JLabel implements TableCellRenderer {
 
         return this;
     }
+    public static MaskFormatter formatation(String format) {
+        MaskFormatter shape = null;
+        try {
+            shape = new MaskFormatter(format);
+            shape.setValueContainsLiteralCharacters(false);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return shape;
+    }
 }

@@ -16,8 +16,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.text.MaskFormatter;
+
+import static org.example.view.CellRenderer.formatation;
 
 public class CompanyManagerWindow extends JFrame {
 
@@ -283,7 +284,6 @@ public class CompanyManagerWindow extends JFrame {
         }
     }
 
-
     private void deleteAction(ActionEvent e) {
         final int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
@@ -295,10 +295,15 @@ public class CompanyManagerWindow extends JFrame {
     }
 
     private void searchAction(ActionEvent e) {
+        String companyPartialName = txtSearch.getText();
+        List<CompanyEntity> searchedCompanies = CompanyService.getByName(companyPartialName);
+        refreshTable(searchedCompanies, true);
+
     }
 
-    public void refreshTable() {
-        List<CompanyEntity> allCompanies = CompanyService.getAll();
+
+    public void refreshTable(List<CompanyEntity> allCompanies, boolean isSeached) {
+        if(!isSeached) allCompanies = CompanyService.getAll();
         model.setRowCount(0); // Limpar dados existentes
         for (CompanyEntity company : allCompanies) {
             Object[] rowData = {
@@ -309,14 +314,4 @@ public class CompanyManagerWindow extends JFrame {
         }
     }
 
-    static MaskFormatter formatation(String format) {
-        MaskFormatter shape = null;
-        try {
-            shape = new MaskFormatter(format);
-            shape.setValueContainsLiteralCharacters(false);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return shape;
-    }
 }
