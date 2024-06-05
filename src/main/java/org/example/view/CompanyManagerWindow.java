@@ -263,7 +263,7 @@ public class CompanyManagerWindow extends JFrame {
 
     private void newCompanyAction(ActionEvent e) {
         CompanyEntity company = new CompanyEntity();
-        NewCompanyWindow newCompanyWindow = new NewCompanyWindow(company, false);
+        NewCompanyWindow newCompanyWindow = new NewCompanyWindow(company, this);
         newCompanyWindow.setVisible(true);
     }
 
@@ -275,12 +275,14 @@ public class CompanyManagerWindow extends JFrame {
     private void editAction(ActionEvent e) {
         final int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
-            CompanyEntity branch = CompanyRepository.findById((int) model.getValueAt(selectedRow, 0));
-            new NewCompanyWindow(branch, true).setVisible(true);
+            Integer companyId = (Integer) model.getValueAt(selectedRow, 0);
+            CompanyEntity company = CompanyRepository.findById(companyId);
+            new NewCompanyWindow(company, this).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum campo selecionado");
         }
     }
+
 
     private void deleteAction(ActionEvent e) {
         final int selectedRow = table.getSelectedRow();
@@ -293,6 +295,18 @@ public class CompanyManagerWindow extends JFrame {
     }
 
     private void searchAction(ActionEvent e) {
+    }
+
+    public void refreshTable() {
+        List<CompanyEntity> allCompanies = CompanyService.getAll();
+        model.setRowCount(0); // Limpar dados existentes
+        for (CompanyEntity company : allCompanies) {
+            Object[] rowData = {
+                    company.getId(), company.getName(), company.getCorporateReason(), company.getPhoneNumber(),
+                    company.getCnpj(), company.getStateInscription(), company.getEmail()
+            };
+            model.addRow(rowData);
+        }
     }
 
     static MaskFormatter formatation(String format) {
