@@ -160,6 +160,8 @@ public class NewCompanyWindow extends JFrame {
 
                 CompanyEntity c = new CompanyEntity(cName, cCr, cCnpj, cSi, cPn, cEmail);
                 CompanyService.createOrUpdate(c);
+
+                dispose();
             }
         });
     }

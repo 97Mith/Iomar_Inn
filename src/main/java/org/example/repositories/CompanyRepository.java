@@ -54,10 +54,6 @@ public class CompanyRepository {
                 em.remove(company);
                 em.getTransaction().commit();
 
-                JOptionPane.showMessageDialog(
-                        null, "Empresa deletada com sucesso.",
-                        "Aviso", JOptionPane.INFORMATION_MESSAGE
-                );
             } else {
                 em.getTransaction().rollback();
             }
