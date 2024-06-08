@@ -25,7 +25,7 @@ public class NewCompanyWindow extends JFrame {
         this.company = company;
         this.parent = parent;
 
-        setTitle("Editar Empresa");
+        setTitle("Empresa");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);

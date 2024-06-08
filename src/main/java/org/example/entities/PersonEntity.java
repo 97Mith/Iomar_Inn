@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.br.CPF;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "guests")
+@Table(name = "tb_guests")
 public class PersonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,7 @@ public class PersonEntity {
     public CompanyEntity company;
 
     @OneToOne(optional = true)
-    @JoinColumn(name = "room_hosted")
+    @JoinColumn(name = "bedroom_number")
     public BedroomEntity bedroom;
 
     @Column(name = "contact_number")

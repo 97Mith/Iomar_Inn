@@ -133,21 +133,5 @@ public class PersonService {
         return true;
     }
 
-    public static DefaultComboBoxModel<String> getAllCompanyNames(boolean firstIndexString) {
-        List<CompanyEntity> companies = CompanyService.getAll();
 
-        List<String> companyNames = companies.stream()
-                .map(CompanyEntity::getName)
-                .collect(Collectors.toList());
-
-        if(firstIndexString){
-            companyNames.add(0, "   -- todos --");
-        } else {
-            companyNames.add(0, "");
-        }
-
-        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>(companyNames.toArray(new String[0]));
-
-        return comboBoxModel;
-    }
 }

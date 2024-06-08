@@ -5,13 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89c01a96-f2ea-4ba0-a813-577c9ac9c47d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/view/TableUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/view/Components.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/view/PersonManagerWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repositories/CompanyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repositories/CompanyRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/services/CompanyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/services/CompanyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/CellRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/CellRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/CompanyManagerWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/CompanyManagerWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entities/BedroomEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entities/BedroomEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entities/CompanyEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entities/CompanyEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entities/PersonEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entities/PersonEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/entities/ProductVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entities/ProductVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/services/PersonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/services/PersonService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/NewCompanyWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/NewCompanyWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/NewPersonWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/NewPersonWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +56,7 @@
       <recent name="C:\Users\Matheus\Desktop\ProjetoIntegrador3\PousadaIomar_PI3\src\main\resources\META-INF" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.CompanyManagerWindow">
+  <component name="RunManager" selected="Application.NewPersonWindow">
     <configuration name="CompanyManagerWindow" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.view.CompanyManagerWindow" />
       <module name="PIPousada" />
@@ -79,8 +83,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="NewPersonWindow" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.view.NewPersonWindow" />
+      <module name="PIPousada" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.NewPersonWindow" />
         <item itemvalue="Application.CompanyManagerWindow" />
         <item itemvalue="Application.Main" />
       </list>
