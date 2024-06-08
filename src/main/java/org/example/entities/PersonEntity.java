@@ -20,7 +20,7 @@ public class PersonEntity {
 
     @ManyToOne(optional = true)
     @JoinColumn(name = "company_id")
-    public CompanyEntity companyEntity;
+    public CompanyEntity company;
 
     @OneToOne(optional = true)
     @JoinColumn(name = "room_hosted")
@@ -63,11 +63,11 @@ public class PersonEntity {
     }
 
     public CompanyEntity getCompanyEntity() {
-        return companyEntity;
+        return company;
     }
 
     public void setCompanyEntity(CompanyEntity companyEntity) {
-        this.companyEntity = companyEntity;
+        this.company = companyEntity;
     }
 
     public BedroomEntity getBedroom() {
