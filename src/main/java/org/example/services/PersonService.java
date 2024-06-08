@@ -7,6 +7,7 @@ import org.example.repositories.PersonRepository;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PersonService {
 
@@ -106,5 +107,47 @@ public class PersonService {
         if(valid && !pn.isEmpty()) valid = Util.minMaxStringSize(11, 12, pn, "campo Telefone");
 
         return valid;
+    }
+
+    public static boolean isPersonCpfUnique(List<PersonEntity> personList, JTextField textField) {
+        if (textField == null) {
+            return true;
+        }
+
+        String text = textField.getText().trim();
+
+        if (text.isEmpty()) {
+            return true;
+        }
+
+        for (PersonEntity person : personList) {
+            if (person.getCpf().equals(text)) {
+                JOptionPane.showMessageDialog(
+                        null, "Esse número de CPF já foi cadastrado.",
+                        "Aviso", JOptionPane.WARNING_MESSAGE
+                );
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static DefaultComboBoxModel<String> getAllCompanyNames(boolean firstIndexString) {
+        List<CompanyEntity> companies = CompanyService.getAll();
+
+        List<String> companyNames = companies.stream()
+                .map(CompanyEntity::getName)
+                .collect(Collectors.toList());
+
+        if(firstIndexString){
+            companyNames.add(0, "   -- todos --");
+        } else {
+            companyNames.add(0, "");
+        }
+
+        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>(companyNames.toArray(new String[0]));
+
+        return comboBoxModel;
     }
 }

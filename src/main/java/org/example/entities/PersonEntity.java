@@ -93,4 +93,8 @@ public class PersonEntity {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+
+    public CompanyEntity getCompany() {
+        return company;
+    }
 }
