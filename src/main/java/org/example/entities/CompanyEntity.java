@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class CompanyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "company_id")
     private Integer id;
 
     @Column(name = "company_name", nullable = false)

@@ -7,7 +7,6 @@ import org.example.repositories.PersonRepository;
 
 import javax.swing.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PersonService {
 
@@ -49,7 +48,7 @@ public class PersonService {
 
     public static List<PersonEntity> findByName(String name) {
         try {
-            return PersonRepository.findByName(name);
+            return PersonRepository.getbyName(name);
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao buscar pessoas pelo nome!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -57,7 +56,7 @@ public class PersonService {
         }
     }
 
-    public static PersonEntity findById(Integer id) {
+    public static PersonEntity getById(Integer id) {
         try {
             return PersonRepository.findById(id);
         } catch (Exception e) {
@@ -69,7 +68,7 @@ public class PersonService {
 
     public static List<PersonEntity> findByCompany(CompanyEntity company) {
         try {
-            return PersonRepository.findByCompany(company);
+            return PersonRepository.getByCompany(company);
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao buscar pessoas pela empresa!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -77,7 +76,7 @@ public class PersonService {
         }
     }
 
-    public static List<PersonEntity> findByBedroom(BedroomEntity bedroom) {
+    public static List<PersonEntity> getByBedroom(BedroomEntity bedroom) {
         try {
             return PersonRepository.findByBedroom(bedroom);
         } catch (Exception e) {

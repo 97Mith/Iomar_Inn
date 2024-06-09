@@ -1,8 +1,6 @@
 package org.example.entities;
 
-import org.hibernate.annotations.ManyToAny;
 import org.hibernate.validator.constraints.br.CPF;
-
 import javax.persistence.*;
 
 @Entity

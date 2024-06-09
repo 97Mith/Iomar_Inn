@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Components {
-    public static DefaultComboBoxModel<String> getAllCompanyNames(boolean putTodosInFirstIndexString) {
+    public static DefaultComboBoxModel<CompanyEntity> getAllCompanyNames(boolean putTodosInFirstIndexString) {
         List<CompanyEntity> companies = CompanyService.getAll();
 
         List<String> companyNames = companies.stream()
@@ -21,6 +21,6 @@ public class Components {
             companyNames.add(0, "");
         }
 
-        return new DefaultComboBoxModel<>(companyNames.toArray(new String[0]));
+        return new DefaultComboBoxModel<>(companies.toArray(new CompanyEntity[0]));
     }
 }

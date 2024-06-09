@@ -99,6 +99,8 @@ public class NewPersonWindow extends JFrame {
             person.setPhoneNumber(phoneNumberField.getText());
             person.setCompanyEntity((CompanyEntity) companiesComboBox.getSelectedItem());
 
+            PersonService.createOrUpdate(person);
+
         }
     }
 }

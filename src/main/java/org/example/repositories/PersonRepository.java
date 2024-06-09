@@ -81,7 +81,7 @@ public class PersonRepository {
         }
     }
 
-    public static List<PersonEntity> findByName(String name) {
+    public static List<PersonEntity> getbyName(String name) {
         EntityManager em = emf.createEntityManager();
         try {
             String queryStr = "SELECT c FROM PersonEntity c WHERE c.name LIKE :name";
@@ -106,7 +106,7 @@ public class PersonRepository {
         }
     }
 
-    public static List<PersonEntity> findByCompany(CompanyEntity company) {
+    public static List<PersonEntity> getByCompany(CompanyEntity company) {
         EntityManager em = emf.createEntityManager();
         try {
             return em.createQuery("SELECT p FROM PersonEntity p WHERE p.company = :company", PersonEntity.class)
