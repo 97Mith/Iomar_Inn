@@ -32,6 +32,8 @@ public class PersonManagerWindow extends JFrame {
     private JTable table;
     private DefaultTableModel model;
     private JComboBox<CompanyEntity> comboBox;
+    private Color standardColor = new Color(28, 130, 255);
+    private Color redColor = new Color(128, 0, 0);
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -64,11 +66,11 @@ public class PersonManagerWindow extends JFrame {
         JPanel topPanel = createTopPanel();
         txtSearch = createSearchTextField();
         comboBox = new JComboBox(Components.getAllCompanyNames(false));
-        JButton btnSearch = createButton("Ir", new Color(28, 150, 255), Color.WHITE, this::searchAction);
-        JButton btnNewPerson = createButton("+ Novo Pessoa", new Color(28, 150, 255), Color.WHITE, this::newPersonAction);
-        JButton btnUpdate = createButton("Atualizar...", new Color(28, 150, 255), Color.WHITE, this::updateAction);
-        JButton btnDelete = createButton("Excluir", new Color(128, 0, 0), Color.WHITE, this::deleteAction);
-        JButton btnEdit = createButton("Editar", new Color(28, 150, 255), Color.WHITE, this::editAction);
+        JButton btnSearch = createButton("Ir", standardColor, Color.WHITE, this::searchAction);
+        JButton btnNewPerson = createButton("+ Novo Pessoa", standardColor, Color.WHITE, this::newPersonAction);
+        JButton btnUpdate = createButton("Atualizar...", standardColor, Color.WHITE, this::updateAction);
+        JButton btnDelete = createButton("Excluir", redColor, Color.WHITE, this::deleteAction);
+        JButton btnEdit = createButton("Editar", standardColor, Color.WHITE, this::editAction);
 
         JPanel panel = createTablePanel();
         JPanel panel1 = createStatusPanel();
@@ -78,7 +80,7 @@ public class PersonManagerWindow extends JFrame {
 
     private JPanel createTopPanel() {
         JPanel topPanel = new JPanel();
-        topPanel.setBackground(new Color(28, 150, 255));
+        topPanel.setBackground(standardColor);
 
         JLabel lblTitle = new JLabel("Pessoa");
         lblTitle.setForeground(Color.WHITE);
@@ -147,6 +149,7 @@ public class PersonManagerWindow extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
 
         MaskFormatter phoneNumberFormatter = formatation("+55 (##) ##### ####");
+        MaskFormatter cpfFormatter = formatation("###.###.###-##");
 
         List<PersonEntity> allPeople = PersonService.getAll();
         assert allPeople != null;
@@ -162,6 +165,7 @@ public class PersonManagerWindow extends JFrame {
         table.getColumnModel().getColumn(5).setPreferredWidth(130);
         table.getColumnModel().getColumn(6).setPreferredWidth(430);
         table.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer(phoneNumberFormatter));
+        table.getColumnModel().getColumn(6).setCellRenderer(new CellRenderer(cpfFormatter));
 
         GroupLayout gl_panel = new GroupLayout(panel);
         gl_panel.setHorizontalGroup(
@@ -189,7 +193,7 @@ public class PersonManagerWindow extends JFrame {
         int total = PersonService.getAll().size();
         JLabel lblTotalOfRecords = new JLabel(String.valueOf(total));
 
-        JButton btnOk = createButton("Ok", new Color(28, 150, 255), Color.WHITE, e -> dispose());
+        JButton btnOk = createButton("Ok", standardColor, Color.WHITE, e -> dispose());
 
         GroupLayout gl_panel1 = new GroupLayout(panel1);
         gl_panel1.setHorizontalGroup(
