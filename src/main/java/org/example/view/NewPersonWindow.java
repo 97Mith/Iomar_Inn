@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class NewPersonWindow extends JFrame {
     private PersonEntity person;
@@ -100,6 +101,8 @@ public class NewPersonWindow extends JFrame {
             person.setCompanyEntity((CompanyEntity) companiesComboBox.getSelectedItem());
 
             PersonService.createOrUpdate(person);
+            parent.refreshTable(new ArrayList<>(), false);
+            dispose();
 
         }
     }

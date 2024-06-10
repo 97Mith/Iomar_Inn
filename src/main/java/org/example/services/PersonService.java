@@ -3,6 +3,7 @@ package org.example.services;
 import org.example.entities.BedroomEntity;
 import org.example.entities.CompanyEntity;
 import org.example.entities.PersonEntity;
+import org.example.repositories.CompanyRepository;
 import org.example.repositories.PersonRepository;
 
 import javax.swing.*;
@@ -130,6 +131,18 @@ public class PersonService {
         }
 
         return true;
+    }
+    public static List<PersonEntity> getByName(String name){
+        List<PersonEntity> peopleSearched = PersonRepository.getbyName(name);
+        assert peopleSearched != null;
+        if(peopleSearched.isEmpty()){
+            JOptionPane.showMessageDialog(null,
+                    "Nenhuma pessoa encontrada",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
+            peopleSearched = getAll();
+        }
+        return peopleSearched;
     }
 
 
