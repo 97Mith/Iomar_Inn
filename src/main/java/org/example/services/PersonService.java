@@ -67,7 +67,7 @@ public class PersonService {
         }
     }
 
-    public static List<PersonEntity> findByCompany(CompanyEntity company) {
+    public static List<PersonEntity> getByCompany(CompanyEntity company) {
         try {
             return PersonRepository.getByCompany(company);
         } catch (Exception e) {

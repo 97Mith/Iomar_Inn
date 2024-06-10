@@ -306,9 +306,13 @@ public class PersonManagerWindow extends JFrame {
     }
 
     private void searchAction(ActionEvent e) {
-        String searchText = txtSearch.getText();
-        //String searchField = (String) comboBox.getSelectedItem();
-        List<PersonEntity> searchedPeople = PersonService.getByName(searchText);
+        List<PersonEntity> searchedPeople;
+        if (comboBox.getSelectedItem() != null){
+            searchedPeople = PersonService.getByCompany((CompanyEntity) comboBox.getSelectedItem());
+        }else {
+            searchedPeople = PersonService.getByName(txtSearch.getText());
+        }
+        comboBox.setSelectedIndex(0);
         refreshTable(searchedPeople, true);
     }
 
