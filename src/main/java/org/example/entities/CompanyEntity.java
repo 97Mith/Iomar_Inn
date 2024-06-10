@@ -35,6 +35,9 @@ public class CompanyEntity {
     public CompanyEntity() {
     }
 
+    public CompanyEntity(String name) {
+        this.name = name;
+    }
 
     public CompanyEntity(String name, String corporateReason, String cnpj, String stateInscription, String phoneNumber, String email) {
         this.name = name;

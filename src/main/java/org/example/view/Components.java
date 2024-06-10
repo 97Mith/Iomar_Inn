@@ -8,18 +8,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Components {
-    public static DefaultComboBoxModel<CompanyEntity> getAllCompanyNames(boolean putTodosInFirstIndexString) {
+    public static DefaultComboBoxModel<CompanyEntity> getAllCompanyNames() {
         List<CompanyEntity> companies = CompanyService.getAll();
-
-        List<String> companyNames = companies.stream()
-                .map(CompanyEntity::getName)
-                .collect(Collectors.toList());
-
-        if(putTodosInFirstIndexString){
-            companyNames.add(0, "   -- todos --");
-        } else {
-            companyNames.add(0, "");
-        }
+        assert companies != null;
+        companies.add(0, new CompanyEntity());
 
         return new DefaultComboBoxModel<>(companies.toArray(new CompanyEntity[0]));
     }

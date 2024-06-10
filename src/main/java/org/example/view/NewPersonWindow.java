@@ -55,7 +55,7 @@ public class NewPersonWindow extends JFrame {
         cpfField = new JTextField();
         cpfField.setFont(font);
 
-        companiesComboBox = new JComboBox(Components.getAllCompanyNames(false));
+        companiesComboBox = new JComboBox(Components.getAllCompanyNames());
 
         JButton saveButton = new JButton("Salvar");
         saveButton.addActionListener(new ActionListener() {
@@ -98,7 +98,7 @@ public class NewPersonWindow extends JFrame {
             person.setSurName(surNameField.getText());
             person.setCpf(cpfField.getText());
             person.setPhoneNumber(phoneNumberField.getText());
-            person.setCompanyEntity((CompanyEntity) companiesComboBox.getSelectedItem());
+            if(companiesComboBox != null) person.setCompanyEntity((CompanyEntity) companiesComboBox.getSelectedItem());
 
             PersonService.createOrUpdate(person);
             parent.refreshTable(new ArrayList<>(), false);

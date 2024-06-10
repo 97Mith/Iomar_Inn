@@ -32,8 +32,8 @@ public class PersonManagerWindow extends JFrame {
     private JTable table;
     private DefaultTableModel model;
     private JComboBox<CompanyEntity> comboBox;
-    private Color standardColor = new Color(28, 130, 255);
-    private Color redColor = new Color(128, 0, 0);
+    private final Color standardColor = new Color(28, 130, 255);
+    private final Color redColor = new Color(128, 0, 0);
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -65,7 +65,7 @@ public class PersonManagerWindow extends JFrame {
     private void initializeComponents() {
         JPanel topPanel = createTopPanel();
         txtSearch = createSearchTextField();
-        comboBox = new JComboBox(Components.getAllCompanyNames(false));
+        comboBox = new JComboBox(Components.getAllCompanyNames());
         JButton btnSearch = createButton("Ir", standardColor, Color.WHITE, this::searchAction);
         JButton btnNewPerson = createButton("+ Novo Pessoa", standardColor, Color.WHITE, this::newPersonAction);
         JButton btnUpdate = createButton("Atualizar...", standardColor, Color.WHITE, this::updateAction);
@@ -307,18 +307,18 @@ public class PersonManagerWindow extends JFrame {
 
     private void searchAction(ActionEvent e) {
         String searchText = txtSearch.getText();
-        String searchField = (String) comboBox.getSelectedItem();
+        //String searchField = (String) comboBox.getSelectedItem();
         List<PersonEntity> searchedPeople = PersonService.getByName(searchText);
         refreshTable(searchedPeople, true);
     }
 
     public void refreshTable(List<PersonEntity> allPeople, boolean isSearched) {
         if (!isSearched) allPeople = PersonService.getAll();
-        model.setRowCount(0); // Limpar dados existentes
+        model.setRowCount(0);
         for (PersonEntity person : allPeople) {
             Object[] rowData = {
                     person.getId(), person.getName(), person.getSurName(), person.getPhoneNumber(),
-                    person.getCpf(), person.getBedroom(), person.getCompanyEntity()
+                    person.getBedroom(), person.getCompanyEntity(), person.getCpf()
             };
             model.addRow(rowData);
         }
