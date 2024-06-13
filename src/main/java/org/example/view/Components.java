@@ -10,9 +10,6 @@ import java.util.stream.Collectors;
 public class Components {
     public static DefaultComboBoxModel<CompanyEntity> getAllCompanyNames() {
         List<CompanyEntity> companies = CompanyService.getAll();
-        assert companies != null;
-        companies.add(0, new CompanyEntity());
-
         return new DefaultComboBoxModel<>(companies.toArray(new CompanyEntity[0]));
     }
 }

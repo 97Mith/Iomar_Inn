@@ -75,6 +75,8 @@ public class PersonManagerWindow extends JFrame {
         JPanel panel = createTablePanel();
         JPanel panel1 = createStatusPanel();
 
+        comboBox.setSelectedIndex(-1);
+
         layoutComponents(topPanel, txtSearch, comboBox, btnSearch, btnNewPerson, btnUpdate, btnDelete, btnEdit, panel, panel1);
     }
 
@@ -191,7 +193,7 @@ public class PersonManagerWindow extends JFrame {
 
         JLabel lblRecord = new JLabel("Total de registros:");
         int total = PersonService.getAll().size();
-        JLabel lblTotalOfRecords = new JLabel(String.valueOf(total));
+        JLabel lblTotalOfRecords = new JLabel(String.valueOf(total)); //TODO criar meio para que o total atualize na hora
 
         JButton btnOk = createButton("Ok", standardColor, Color.WHITE, e -> dispose());
 

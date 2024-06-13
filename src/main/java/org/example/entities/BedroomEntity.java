@@ -17,7 +17,7 @@ public class BedroomEntity {
     public boolean hasBathroom;
 
     @Column(name = "situation", nullable = false)
-    public boolean status;
+    public String status;
 
     @Column(nullable = false)
     public double value;
@@ -25,7 +25,7 @@ public class BedroomEntity {
     public BedroomEntity() {
     }
 
-    public BedroomEntity(Integer capacity, boolean hasBathroom, boolean status, double value) {
+    public BedroomEntity(Integer capacity, boolean hasBathroom, String status, double value) {
         this.capacity = capacity;
         this.hasBathroom = hasBathroom;
         this.status = status;
@@ -52,11 +52,11 @@ public class BedroomEntity {
         this.hasBathroom = hasBathroom;
     }
 
-    public boolean isStatus() {
+    public String status() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

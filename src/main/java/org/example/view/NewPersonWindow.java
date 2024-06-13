@@ -3,6 +3,7 @@ package org.example.view;
 import org.example.entities.BedroomEntity;
 import org.example.entities.CompanyEntity;
 import org.example.entities.PersonEntity;
+import org.example.services.CompanyService;
 import org.example.services.PersonService;
 
 import javax.swing.*;
@@ -56,6 +57,7 @@ public class NewPersonWindow extends JFrame {
         cpfField.setFont(font);
 
         companiesComboBox = new JComboBox(Components.getAllCompanyNames());
+        companiesComboBox.setSelectedIndex(-1);
 
         JButton saveButton = new JButton("Salvar");
         saveButton.addActionListener(new ActionListener() {
@@ -86,6 +88,8 @@ public class NewPersonWindow extends JFrame {
             surNameField.setText(person.getSurName());
             cpfField.setText(person.getCpf());
             phoneNumberField.setText(person.getPhoneNumber());
+
+            companiesComboBox.setModel(new DefaultComboBoxModel<>(CompanyService.getAll().toArray(new CompanyEntity[0])));
             companiesComboBox.setSelectedItem(person.getCompany());
         }
     }
