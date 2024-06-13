@@ -36,7 +36,7 @@ public class BedroomService {
         newBedroom(new BedroomEntity(2, false, "Disponível", 90));
     }
 
-    public static List<PersonEntity> loadAllInBedroom(Integer bedroomNumber){
+    public static List<PersonEntity> loadAllInBedroom(BedroomEntity bedroomNumber){
         try{
             List<PersonEntity> guests = PersonRepository.findByBedroom(bedroomNumber);
             return guests;

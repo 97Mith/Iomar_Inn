@@ -119,7 +119,7 @@ public class PersonRepository {
         }
     }
 
-    public static List<PersonEntity> findByBedroom(Integer bedroom) {
+    public static List<PersonEntity> findByBedroom(BedroomEntity bedroom) {
         EntityManager em = emf.createEntityManager();
         try {
             return em.createQuery("SELECT p FROM PersonEntity p WHERE p.bedroom = :bedroom", PersonEntity.class)

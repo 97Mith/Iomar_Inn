@@ -77,7 +77,7 @@ public class PersonService {
         }
     }
 
-    public static List<PersonEntity> getByBedroom(Integer bedroom) {
+    public static List<PersonEntity> getByBedroom(BedroomEntity bedroom) {
         try {
             return PersonRepository.findByBedroom(bedroom);
         } catch (Exception e) {

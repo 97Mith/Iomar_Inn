@@ -265,7 +265,7 @@ public class MainWindow extends JFrame {
 
         bedroomLabel.setPreferredSize(new Dimension(panelWidth, panelHeight));
 
-        List<PersonEntity> data = BedroomService.loadAllInBedroom(num);
+        List<PersonEntity> data = BedroomService.loadAllInBedroom(BedroomService.getById(num));
 
         if (data == null) {
             // Handle null data case
