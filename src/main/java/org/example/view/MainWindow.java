@@ -2,8 +2,8 @@ package org.example.view;
 
 import org.example.entities.BedroomEntity;
 import org.example.entities.PersonEntity;
-//import org.example.services.BedroomService;
-//import org.example.services.MainService;
+import org.example.services.BedroomService;
+import org.example.tablesUtil.MainTable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -115,9 +115,6 @@ public class MainWindow extends JFrame {
         GroupLayout layout = new GroupLayout(panel);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(37)
-                                .addContainerGap(206, Short.MAX_VALUE))
                         .addComponent(companyNameLabel, GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -268,7 +265,12 @@ public class MainWindow extends JFrame {
 
         bedroomLabel.setPreferredSize(new Dimension(panelWidth, panelHeight));
 
-        /*List<PersonEntity> data = BedroomService.loadAllInBedroom(num);
+        List<PersonEntity> data = BedroomService.loadAllInBedroom(num);
+
+        if (data == null) {
+            // Handle null data case
+            data = List.of(); // Assuming empty list for null case
+        }
 
         boolean hasGuests = isSomebodyinBedroom(data);
         Color backgroundColor = determineBackgroundColor(hasGuests);
@@ -284,7 +286,7 @@ public class MainWindow extends JFrame {
         bedroomPane.add(bedroomLabel);
         bedroomPane.revalidate();
         bedroomPane.repaint();
-        bedroomCount += 1;*/
+        bedroomCount += 1;
     }
 
     private Color determineBackgroundColor(boolean hasGuests) {
@@ -298,7 +300,7 @@ public class MainWindow extends JFrame {
     private JPanel createTablePanel(List<PersonEntity> data, Color backgroundColor) {
         JPanel panel = new JPanel(new BorderLayout());
 
-        /*DefaultTableModel model = MainService.createMainTable(data);
+        DefaultTableModel model = MainTable.createMainTable(data);
         JTable table = new JTable(model);
         table.setFont(table.getFont().deriveFont(table.getFont().getSize()));
         table.setRowHeight(table.getRowHeight() * 2);
@@ -306,7 +308,7 @@ public class MainWindow extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
 
         panel.add(scrollPane, BorderLayout.CENTER);
-        panel.add(createCheckoutLabel(), BorderLayout.SOUTH);*/
+        panel.add(createCheckoutLabel(), BorderLayout.SOUTH);
 
         return panel;
     }
@@ -321,32 +323,37 @@ public class MainWindow extends JFrame {
         return label;
     }
 
-    /*private JLabel createRoomLabel(List<PersonEntity> data, Integer num) {
-        /*BedroomEntity bedroomEntity = BedroomService.getById(num);
+    private JLabel createRoomLabel(List<PersonEntity> data, Integer num) {
+        BedroomEntity bedroomEntity = BedroomService.getById(num);
+        if (bedroomEntity == null) {
+            // Handle null bedroomEntity case
+            bedroomEntity = new BedroomEntity(); // Assuming a default entity
+        }
+
         Integer vacancy = bedroomEntity.getCapacity() - data.size();
 
         String labelText = "Quarto " + num + "                   " + "Vagas: " + vacancy;
         if (!data.isEmpty()) {
-            String companyName = data.get(0).getCompanyName();
+            String companyName = data.get(0).getCompany().getName();
             labelText = "Quarto " + num + "                     " + companyName + "               " + " " + "Vagas: " + vacancy;
         }
 
         JLabel label = new JLabel(labelText);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         return label;
-    }*/
+    }
 
-    /*private JPanel createButtonPanel(Integer num, Color backgroundColor) {
+    private JPanel createButtonPanel(Integer num, Color backgroundColor) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1, 0, 20));
 
         JButton editButton = createWhiteButton("Gerenciar quarto");
         editButton.setBackground(backgroundColor);
-        editButton.addActionListener(e -> new BedroomWindow(num).setVisible(true));
+        //editButton.addActionListener(e -> new BedroomWindow(num).setVisible(true));
 
         panel.add(editButton);
         return panel;
-    }*/
+    }
 
     private void updatePanelColor(JPanel panel, LocalDateTime checkoutDateTime) {
         Color backgroundColor;
@@ -368,7 +375,7 @@ public class MainWindow extends JFrame {
     }
 
     public boolean isSomebodyinBedroom(List<PersonEntity> data) {
-        return !data.isEmpty();
+        return data != null && !data.isEmpty();
     }
 
     public static void main(String[] args) {
