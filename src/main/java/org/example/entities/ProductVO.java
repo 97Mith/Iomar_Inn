@@ -57,6 +57,18 @@ public class ProductVO {
         this.isLaundry = isLaundry;
     }
 
+    public Integer getRegisterNum() {
+        return registerNum;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public CompanyEntity getCompany() {
+        return company;
+    }
+
     public Integer getQnt() {
         return qnt;
     }

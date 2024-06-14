@@ -15,12 +15,13 @@ import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
 import org.example.entities.BedroomEntity;
-import org.example.entities.ProductEntity;
+import org.example.entities.ProductVO;
 import org.example.entities.PersonEntity;
 import org.example.repositories.CompanyRepository;
 import org.example.services.BedroomService;
 import org.example.services.ProductService;
 import org.example.services.PersonService;
+import org.example.tablesUtil.PersonTable;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -105,9 +106,9 @@ public class BedroomWindow extends JFrame {
         lblBedroomNumber.setFont(new Font("Verdana", Font.PLAIN, 20));
 
         JLabel lblCompany = new JLabel("Sem empresa");
-        List<PersonEntity> guests = BedroomService.loadAllInBedroom(bedroomNumber);
+        List<PersonEntity> guests = BedroomService.loadAllInBedroom(BedroomService.getById(bedroomNumber));
         if (!guests.isEmpty()) {
-            String companyName = guests.get(0).getCompanyName();
+            String companyName = guests.get(0).getCompany().getName();
             lblCompany.setText(companyName);
         }
         lblCompany.setForeground(Color.WHITE);
@@ -152,8 +153,8 @@ public class BedroomWindow extends JFrame {
 
         JScrollPane scrollPaneGuests = new JScrollPane();
         tableGuests = new JTable();
-        List<PersonEntity> guests = BedroomService.loadAllInBedroom(bedroomNumber);
-        DefaultTableModel modelGuests = PersonService.createPeopleTable(guests);
+        List<PersonEntity> guests = BedroomService.loadAllInBedroom(BedroomService.getById(bedroomNumber));
+        DefaultTableModel modelGuests = PersonTable.createPeopleTable(guests);
         tableGuests.setModel(modelGuests);
         formatTableStandard(tableGuests);
         scrollPaneGuests.setViewportView(tableGuests);
@@ -259,22 +260,38 @@ public class BedroomWindow extends JFrame {
         return panel;
     }
 
-    private ActionListener createAddGuestButton(Integer bedroomNumber, Integer capacity) {
-        return e -> {
-            List<PersonEntity> guests = BedroomService.loadAllInBedroom(bedroomNumber);
+    private JButton createAddGuestButton(Integer bedroomNumber, Integer capacity) {
+        JButton btnAddGuest = new JButton("+  Adicionar");
+        btnAddGuest.setForeground(Color.WHITE);
+        btnAddGuest.setBackground(new Color(0, 128, 192));
+        btnAddGuest.addActionListener(e -> {
+            List<PersonEntity> guests = BedroomService.loadAllInBedroom(BedroomService.getById(bedroomNumber));
             if (guests.size() > capacity - 1) {
                 JOptionPane.showMessageDialog(null, "O quarto está lotado.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                new PersonManagerWindow(bedroomNumber, new JButton()).setVisible(true);
+                new PersonManagerWindow().setVisible(true);
             }
-        };
+        });
+        return btnAddGuest;
     }
 
-    private ActionListener createRemoveGuestButton() {
-        return e -> {
-            // Add code to remove guest
-        };
+
+    private JButton createRemoveGuestButton() {
+        JButton btnRemoveGuest = new JButton("-  Remover");
+        btnRemoveGuest.setForeground(Color.WHITE);
+        btnRemoveGuest.setBackground(new Color(128, 0, 0));
+        btnRemoveGuest.addActionListener(e -> {
+            final int selectedRow = tableGuests.getSelectedRow();
+            if (selectedRow != -1) {
+                DefaultTableModel modelGuests = (DefaultTableModel) tableGuests.getModel();
+                PersonService.deleteById((int) modelGuests.getValueAt(selectedRow, 0));
+            } else {
+                JOptionPane.showMessageDialog(null, "Nenhum campo selecionado");
+            }
+        });
+        return btnRemoveGuest;
     }
+
 
     private PropertyChangeListener createDateChangeListener(double bedroomValue) {
         return evt -> {
