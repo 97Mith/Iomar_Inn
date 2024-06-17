@@ -8,11 +8,12 @@ import org.example.entities.PersonEntity;
 import org.example.services.BedroomService;
 import org.example.services.PersonService;
 import org.example.tablesUtil.PersonTable;
+import org.example.view.TableUtils.*;
 
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Color;
 import java.awt.Font;
-import java.text.ParseException;
+import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.LayoutStyle;
 import javax.swing.table.DefaultTableModel;
@@ -29,6 +30,8 @@ public class BedroomWindow extends JFrame {
     private JTextField textFieldDiscount;
     private JPanel panel_1;
     private JTable tableGuests;
+    private Color blueColor = new Color(0, 128, 192);
+    private Color redColor = new Color(128, 0, 0);
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -62,7 +65,7 @@ public class BedroomWindow extends JFrame {
 
     private void initializeTopPanel() {
         panel = new JPanel(); // Initialize the panel here
-        panel.setBackground(new Color(0, 128, 255));
+        panel.setBackground(blueColor);
 
         JLabel lbl = new JLabel("Quarto");
         lbl.setForeground(Color.WHITE);
@@ -153,17 +156,15 @@ public class BedroomWindow extends JFrame {
 
         JButton btnDoneStay = new JButton("Encerrar Estada");
         btnDoneStay.setForeground(Color.WHITE);
-        btnDoneStay.setBackground(new Color(0, 128, 192));
+        btnDoneStay.setBackground(blueColor);
 
         JPanel panel_2_1 = createTotalPanel("Total:  R$", "0,00", "Valor diária                R$", "0,00");
 
-        JButton btnAdd = new JButton("+  Adicionar");
-        btnAdd.setForeground(Color.WHITE);
-        btnAdd.setBackground(new Color(0, 128, 192));
+        JButton btnAdd = TableUtils.createButton("+ Adicionar", blueColor, Color.WHITE, this::addGuestAction);
 
         JButton btnRemoveGuest = new JButton("-  Remover");
         btnRemoveGuest.setForeground(Color.WHITE);
-        btnRemoveGuest.setBackground(new Color(128, 0, 0));
+        btnRemoveGuest.setBackground(redColor);
 
         textFieldDiscount = new JTextField();
         textFieldDiscount.setColumns(10);
@@ -278,11 +279,11 @@ public class BedroomWindow extends JFrame {
 
         JButton btnAddProduct = new JButton("+  Produto");
         btnAddProduct.setForeground(Color.WHITE);
-        btnAddProduct.setBackground(new Color(0, 128, 192));
+        btnAddProduct.setBackground(blueColor);
 
         JButton btnRemoveProduct = new JButton("-  Remover");
         btnRemoveProduct.setForeground(Color.WHITE);
-        btnRemoveProduct.setBackground(new Color(128, 0, 0));
+        btnRemoveProduct.setBackground(redColor);
 
         JPanel panelTotal = createTotalPanel("Total:  R$", "150,00");
 
@@ -336,11 +337,11 @@ public class BedroomWindow extends JFrame {
 
         JButton btnAddCloath = new JButton("+  Roupa");
         btnAddCloath.setForeground(Color.WHITE);
-        btnAddCloath.setBackground(new Color(0, 128, 192));
+        btnAddCloath.setBackground(blueColor);
 
         JButton btnRemoveCloath = new JButton("-  Remover");
         btnRemoveCloath.setForeground(Color.WHITE);
-        btnRemoveCloath.setBackground(new Color(128, 0, 0));
+        btnRemoveCloath.setBackground(redColor);
 
         JPanel panelTotal = createTotalPanel("Total:  R$", "150,00");
 
@@ -461,6 +462,10 @@ public class BedroomWindow extends JFrame {
 
         panel_1.setLayout(gl_panel_1);
         return panel_1;
+    }
+
+    private void addGuestAction(ActionEvent e) {
+        new PersonManagerWindow().setVisible(true);
     }
 
 }

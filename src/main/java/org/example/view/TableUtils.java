@@ -2,7 +2,9 @@ package org.example.view;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -48,5 +50,13 @@ public class TableUtils {
         for (T entity : entities) {
             model.addRow(rowMapper.apply(entity));
         }
+    }
+
+    public static JButton createButton(String text, Color bgColor, Color fgColor, ActionListener action) {
+        JButton button = new JButton(text);
+        button.setBackground(bgColor);
+        button.setForeground(fgColor);
+        button.addActionListener(action);
+        return button;
     }
 }
