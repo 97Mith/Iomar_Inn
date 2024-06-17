@@ -3,27 +3,37 @@ import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
+import org.example.entities.BedroomEntity;
+import org.example.entities.PersonEntity;
+import org.example.services.BedroomService;
+import org.example.services.PersonService;
+import org.example.tablesUtil.PersonTable;
 
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Color;
 import java.awt.Font;
+import java.text.ParseException;
+import java.util.List;
 import javax.swing.LayoutStyle;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
+
+import static org.example.view.CellRenderer.formatation;
 
 public class BedroomWindow extends JFrame {
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
-    private JPanel panel; // Added this line to declare panel as a class field
-    private JTable tableGuests;
+    private JPanel panel;
     private JTable tableProducts;
     private JTable tableLaundry;
     private JTextField textFieldDiscount;
     private JPanel panel_1;
-    private JTable tableGuests_1;
+    private JTable tableGuests;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
-                BedroomWindow frame = new BedroomWindow();
+                BedroomWindow frame = new BedroomWindow(BedroomService.getById(1));
                 frame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -31,11 +41,11 @@ public class BedroomWindow extends JFrame {
         });
     }
 
-    public BedroomWindow() {
+    public BedroomWindow(BedroomEntity bedroomEntity) {
         initializeWindow();
         initializeContentPane();
         initializeTopPanel(); // This will now initialize the panel variable
-        initializeMainPanels();
+        initializeMainPanels(bedroomEntity);
     }
 
     private void initializeWindow() {
@@ -92,8 +102,8 @@ public class BedroomWindow extends JFrame {
         panel.setLayout(gl_panel);
     }
 
-    private void initializeMainPanels() {
-        JPanel panelCheckInOut = createCheckInOutPanel();
+    private void initializeMainPanels(BedroomEntity bedroomEntity) {
+        JPanel panelCheckInOut = createCheckInOutPanel(bedroomEntity);
         JPanel panelProducts = createProductsPanel();
         JPanel panelLaundry = createLaundryPanel();
 
@@ -125,7 +135,9 @@ public class BedroomWindow extends JFrame {
         contentPane.setLayout(gl_contentPane);
     }
 
-    private JPanel createCheckInOutPanel() {
+    private JPanel createCheckInOutPanel(BedroomEntity bedroomEntity) {
+        List<PersonEntity> people = PersonService.getByBedroom(bedroomEntity);
+        DefaultTableModel model = PersonTable.createPeopleRoomTable(people);
         JPanel panelCheckInOut = new JPanel();
 
         JLabel lblCheckIn = new JLabel("Check In");
@@ -239,9 +251,17 @@ public class BedroomWindow extends JFrame {
                                 .addComponent(btnDoneStay)
                                 .addGap(10))
         );
+        MaskFormatter cpfFormatter = formatation("###.###.###-##");
+        MaskFormatter phoneNumFormatter = formatation("(##)##### ####");
 
-        tableGuests_1 = new JTable();
-        scrollPane.setViewportView(tableGuests_1);
+        tableGuests = new JTable();
+        tableGuests.setModel(model);
+        tableGuests.setFont(new Font("Arial", Font.BOLD, 12));
+        tableGuests.getColumnModel().getColumn(0).setPreferredWidth(20);
+        tableGuests.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer(phoneNumFormatter));
+        tableGuests.getColumnModel().getColumn(4).setCellRenderer(new CellRenderer(cpfFormatter));
+
+        scrollPane.setViewportView(tableGuests);
         panelCheckInOut.setLayout(gl_panelCheckInOut);
         return panelCheckInOut;
     }
@@ -443,7 +463,4 @@ public class BedroomWindow extends JFrame {
         return panel_1;
     }
 
-    public void isChecked(JCheckBox checkBox, JLabel label) {
-        // Method implementation
-    }
 }

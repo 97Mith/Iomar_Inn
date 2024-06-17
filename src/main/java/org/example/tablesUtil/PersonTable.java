@@ -34,4 +34,29 @@ public class PersonTable {
         }
         return tableModel;
     }
+    public static DefaultTableModel createPeopleRoomTable(List<PersonEntity> people) {
+        String[] columnNames = {
+                "ID",//1
+                "Nome",//2
+                "Sobrenome",//3
+                "Telefone",//4
+                "CPF"
+        };
+
+        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+
+        for (PersonEntity peopleTable : people) {
+            Object[] rowData = {
+                    peopleTable.getId(),//1
+                    peopleTable.getName(),//2
+                    peopleTable.getSurName(),//3
+                    peopleTable.getPhoneNumber(),//4
+                    peopleTable.getCpf()
+            };
+
+            tableModel.addRow(rowData);
+        }
+        return tableModel;
+    }
+
 }
