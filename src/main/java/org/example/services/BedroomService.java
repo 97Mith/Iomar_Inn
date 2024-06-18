@@ -26,7 +26,7 @@ public class BedroomService {
         }
     }
 
-    private static void standardCreate(){
+    public static void standardCreate(){
         for(int i = 1; i <= 3; i++){
             newBedroom(new BedroomEntity(4, true, "Disponível", 150));
         }

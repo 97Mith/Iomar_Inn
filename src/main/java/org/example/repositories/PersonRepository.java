@@ -54,11 +54,10 @@ public class PersonRepository {
         }
     }
 
-    public static void insertOrRemoveBedroom(Integer personId, BedroomEntity bedroom) {
+    public static void insertOrRemoveBedroom(PersonEntity person, BedroomEntity bedroom) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            PersonEntity person = em.find(PersonEntity.class, personId);
             person.setBedroom(bedroom);
             em.merge(person);
             em.getTransaction().commit();

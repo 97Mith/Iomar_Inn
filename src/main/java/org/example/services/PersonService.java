@@ -87,9 +87,9 @@ public class PersonService {
         }
     }
 
-    public static boolean insertOrRemoveBedroom(Integer personId, BedroomEntity bedroom) {
+    public static boolean insertOrRemoveBedroom(PersonEntity person, BedroomEntity bedroom) {
         try {
-            PersonRepository.insertOrRemoveBedroom(personId, bedroom);
+            PersonRepository.insertOrRemoveBedroom(person, bedroom);
             JOptionPane.showMessageDialog(null, "Quarto atualizado com sucesso para a pessoa!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             return true;
         } catch (Exception e) {

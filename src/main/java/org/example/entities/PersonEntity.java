@@ -21,7 +21,7 @@ public class PersonEntity {
     public CompanyEntity company;
 
     @OneToOne(optional = true)
-    @JoinColumn(name = "bedroom_number")
+    @JoinColumn(name = "bedroom_number", referencedColumnName = "bedroom_number")
     public BedroomEntity bedroom;
 
     @Column(name = "contact_number")

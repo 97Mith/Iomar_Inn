@@ -1,8 +1,10 @@
 package org.example.view;
 
+import org.example.entities.BedroomEntity;
 import org.example.entities.CompanyEntity;
 import org.example.entities.PersonEntity;
 import org.example.repositories.PersonRepository;
+import org.example.services.BedroomService;
 import org.example.services.CompanyService;
 import org.example.services.PersonService;
 
@@ -30,6 +32,7 @@ public class PersonManagerWindow extends JFrame {
     private JPanel contentPane;
     private JTextField txtSearch;
     private JTable table;
+    private BedroomEntity bedroomEntity;
     private DefaultTableModel model;
     private JComboBox<CompanyEntity> comboBox;
     private final Color standardColor = new Color(28, 130, 255);
@@ -48,7 +51,11 @@ public class PersonManagerWindow extends JFrame {
 
     public PersonManagerWindow() {
         setupFrame();
-        initializeComponents();
+        initializeComponents(BedroomService.getById(1));
+    }
+    public PersonManagerWindow(BedroomEntity bedroomEntity) {
+        setupFrame();
+        initializeComponents(bedroomEntity);
     }
 
     private void setupFrame() {
@@ -62,7 +69,8 @@ public class PersonManagerWindow extends JFrame {
         setContentPane(contentPane);
     }
 
-    private void initializeComponents() {
+    private void initializeComponents(BedroomEntity bedroom) {
+        bedroomEntity = bedroom;
         JPanel topPanel = createTopPanel();
         txtSearch = createSearchTextField();
         comboBox = new JComboBox(Components.getAllCompanyNames());
@@ -73,7 +81,7 @@ public class PersonManagerWindow extends JFrame {
         JButton btnEdit = createButton("Editar", standardColor, Color.WHITE, this::editAction);
 
         JPanel panel = createTablePanel();
-        JPanel panel1 = createStatusPanel();
+        JPanel panel1 = createStatusPanel(bedroom);
 
         comboBox.setSelectedIndex(-1);
 
@@ -188,14 +196,14 @@ public class PersonManagerWindow extends JFrame {
         return panel;
     }
 
-    private JPanel createStatusPanel() {
+    private JPanel createStatusPanel(BedroomEntity bedroom) {
         JPanel panel1 = new JPanel();
 
         JLabel lblRecord = new JLabel("Total de registros:");
         int total = PersonService.getAll().size();
         JLabel lblTotalOfRecords = new JLabel(String.valueOf(total)); //TODO criar meio para que o total atualize na hora
 
-        JButton btnOk = createButton("Ok", standardColor, Color.WHITE, e -> dispose());
+        JButton btnOk = createButton("Ok", standardColor, Color.WHITE, this::addGuestAction);
 
         GroupLayout gl_panel1 = new GroupLayout(panel1);
         gl_panel1.setHorizontalGroup(
@@ -327,6 +335,16 @@ public class PersonManagerWindow extends JFrame {
                     person.getBedroom(), person.getCompanyEntity(), person.getCpf()
             };
             model.addRow(rowData);
+        }
+    }
+    private void addGuestAction(ActionEvent e) {
+        final int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            PersonEntity p = PersonService.getById((int) model.getValueAt(selectedRow, 0));
+            PersonService.insertOrRemoveBedroom(p, bedroomEntity);
+            updateAction(e);
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum campo selecionado");
         }
     }
 
