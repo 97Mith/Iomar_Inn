@@ -6,9 +6,9 @@ import com.toedter.calendar.JDateChooser;
 import org.example.entities.BedroomEntity;
 import org.example.entities.PersonEntity;
 import org.example.services.BedroomService;
+import org.example.services.WindowService;
 import org.example.services.PersonService;
 import org.example.tablesUtil.PersonTable;
-import org.example.view.TableUtils.*;
 
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Color;
@@ -32,6 +32,7 @@ public class BedroomWindow extends JFrame {
     private JTable tableGuests;
     private Color blueColor = new Color(0, 128, 192);
     private Color redColor = new Color(128, 0, 0);
+    private String nightValue;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -154,11 +155,19 @@ public class BedroomWindow extends JFrame {
         JDateChooser dateCheckOut = new JDateChooser();
         dateCheckOut.setDateFormatString("d '/' MM '/' y");
 
+        textFieldDiscount = new JTextField();
+        textFieldDiscount.setColumns(10);
+
+        WindowService.addDateChangeListener(dateCheckIn, dateCheckOut, bedroomEntity.getValue(), textFieldDiscount, this);
+
         JButton btnDoneStay = new JButton("Encerrar Estada");
         btnDoneStay.setForeground(Color.WHITE);
         btnDoneStay.setBackground(blueColor);
+        nightValue = String.valueOf(bedroomEntity.getValue());
 
-        JPanel panel_2_1 = createTotalPanel("Total:  R$", "0,00", "Valor diária                R$", "0,00");
+
+
+        JPanel panel_2_1 = createTotalPanel("Total:  R$", "0,00", "Valor diária                R$", nightValue);
 
         JButton btnAdd = TableUtils.createButton("+ Adicionar", blueColor, Color.WHITE, this::addGuestAction);
 
@@ -166,8 +175,7 @@ public class BedroomWindow extends JFrame {
         btnRemoveGuest.setForeground(Color.WHITE);
         btnRemoveGuest.setBackground(redColor);
 
-        textFieldDiscount = new JTextField();
-        textFieldDiscount.setColumns(10);
+
         JLabel lblRs = new JLabel("R$");
         JLabel lblDesconto_1 = new JLabel("Desconto");
 
