@@ -34,7 +34,19 @@ public class BedroomService {
             newBedroom(new BedroomEntity(4, false, "Disponível", 150));
         }
         newBedroom(new BedroomEntity(2, false, "Disponível", 90));
-        CompanyService.emptyCompany();
+        CompanyService.createEmptyCompany();
+    }
+
+    public static Integer getTotal(){
+        try{
+            return BedroomRepository.getTotalRooms();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,
+                    "Zero total de quartos!",
+                    "Aviso",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return 0;
+        }
     }
 
     public static List<PersonEntity> loadAllInBedroom(BedroomEntity bedroomNumber){

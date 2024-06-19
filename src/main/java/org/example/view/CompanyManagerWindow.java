@@ -3,6 +3,7 @@ package org.example.view;
 import org.example.entities.CompanyEntity;
 import org.example.repositories.CompanyRepository;
 import org.example.services.CompanyService;
+import org.example.tablesUtil.CompanyTable;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -143,9 +144,9 @@ public class CompanyManagerWindow extends JFrame {
         MaskFormatter cnpjFormatter = formatation("##.###.###/####-##");
         MaskFormatter phoneNumberFormatter = formatation("+55 (##) ##### ####");
 
-        List<CompanyEntity> allCompanies = CompanyService.getAll();
+        List<CompanyEntity> allCompanies = CompanyService.getAll2();
         assert allCompanies != null;
-        model = CompanyService.createCompanyTable(allCompanies);
+        model = CompanyTable.createCompanyTable(allCompanies);
         table.setModel(model);
 
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -182,7 +183,7 @@ public class CompanyManagerWindow extends JFrame {
         JPanel panel1 = new JPanel();
 
         JLabel lblRecord = new JLabel("Total de registros:");
-        int total = CompanyService.getAll().size();
+        int total = CompanyService.getAll2().size();
         JLabel lblTotalOfRecords = new JLabel(String.valueOf(total));
 
         JButton btnOk = createButton("Ok", new Color(128, 0, 255), Color.WHITE, e -> dispose());
@@ -303,7 +304,7 @@ public class CompanyManagerWindow extends JFrame {
 
 
     public void refreshTable(List<CompanyEntity> allCompanies, boolean isSeached) {
-        if(!isSeached) allCompanies = CompanyService.getAll();
+        if(!isSeached) allCompanies = CompanyService.getAll2();
         model.setRowCount(0); // Limpar dados existentes
         for (CompanyEntity company : allCompanies) {
             Object[] rowData = {

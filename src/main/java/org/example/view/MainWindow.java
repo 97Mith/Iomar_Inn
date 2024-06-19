@@ -240,7 +240,7 @@ public class MainWindow extends JFrame {
     }
 
     private void addInitialBedrooms() {
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < BedroomService.getTotal(); i++) {
             addBedroom();
         }
     }

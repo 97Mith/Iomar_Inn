@@ -13,7 +13,7 @@ public class NewCompanyWindow extends JFrame {
 
     private CompanyEntity company;
     private CompanyManagerWindow parent;
-
+    private boolean editMode = false;
     private JTextField nameField;
     private JTextField corporateReasonField;
     private JTextField cnpjField;
@@ -92,6 +92,7 @@ public class NewCompanyWindow extends JFrame {
             stateInscriptionField.setText(company.getStateInscription());
             phoneNumberField.setText(company.getPhoneNumber());
             emailField.setText(company.getEmail());
+            editMode = true;
         }
     }
 
