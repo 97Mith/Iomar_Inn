@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="89c01a96-f2ea-4ba0-a813-577c9ac9c47d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repositories/PersonRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repositories/PersonRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/services/CompanyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/services/CompanyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/services/PersonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/services/PersonService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/MainWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +47,7 @@
       <recent name="C:\Users\Matheus\Desktop\ProjetoIntegrador3\PousadaIomar_PI3\src\main\resources\META-INF" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.PersonManagerWindow">
+  <component name="RunManager" selected="Application.MainWindow">
     <configuration name="BedroomWindow" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.view.BedroomWindow" />
       <module name="PIPousada" />
@@ -117,9 +115,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MainWindow" />
         <item itemvalue="Application.PersonManagerWindow" />
         <item itemvalue="Application.CompanyManagerWindow" />
-        <item itemvalue="Application.MainWindow" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.BedroomWindow" />
       </list>

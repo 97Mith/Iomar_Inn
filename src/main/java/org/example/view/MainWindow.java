@@ -269,8 +269,7 @@ public class MainWindow extends JFrame {
         List<PersonEntity> data = BedroomService.loadAllInBedroom(BedroomService.getById(num));
 
         if (data == null) {
-            // Handle null data case
-            data = List.of(); // Assuming empty list for null case
+            data = List.of();
         }
 
         boolean hasGuests = isSomebodyinBedroom(data);
@@ -348,6 +347,7 @@ public class MainWindow extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1, 0, 20));
         BedroomEntity be = BedroomService.getById(num);
+        assert be != null;
         JButton editButton = TableUtils.createButton("Gerenciar Quarto", Color.WHITE, Color.BLACK, openBedroomWindow(be));
         editButton.setBackground(backgroundColor);
 
@@ -355,7 +355,10 @@ public class MainWindow extends JFrame {
         return panel;
     }
     private ActionListener openBedroomWindow(BedroomEntity bedroom) {
-        return e -> new BedroomWindow(bedroom).setVisible(true);
+        return e -> {
+            System.out.print(bedroom.getId());
+            new BedroomWindow(bedroom).setVisible(true);
+        };
     }
 
     private void updatePanelColor(JPanel panel, LocalDateTime checkoutDateTime) {
