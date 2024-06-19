@@ -32,6 +32,18 @@ public class PersonRepository {
             em.close();
         }
     }
+    public static boolean isCpfExists(String cpf) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            String query = "SELECT COUNT(c) FROM PersonEntity c WHERE c.cpf = :cpf";
+            Long count = em.createQuery(query, Long.class)
+                    .setParameter("cpf", cpf)
+                    .getSingleResult();
+            return count > 0;
+        } finally {
+            em.close();
+        }
+    }
 
     public static boolean deletePerson(Integer personId) {
         EntityManager em = emf.createEntityManager();

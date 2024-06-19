@@ -99,11 +99,36 @@ public class PersonService {
         }
     }
 
+    public static boolean isCpfExists(String cpf){
+        try{
+            if(PersonRepository.isCpfExists(cpf)){
+                JOptionPane.showMessageDialog(null,
+                        "O CPF já existe.",
+                        "Aviso",
+                        JOptionPane.WARNING_MESSAGE);
+                return false;
+            }else {
+                return true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null,
+                    "Erro.",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+    }
+
     public static boolean validateFields(String name, String cpf, String sn, String pn){
         boolean valid = Util.isNullOrEmpty(name, "campo nome");
         if(valid) valid = Util.minMaxStringSize(3, 35, name, "campo nome");
+
         if(valid && !cpf.isEmpty()) valid = Util.minMaxStringSize(11, 12, cpf, "CPF");
+        if(valid) valid = isCpfExists(cpf);
+
         if(valid && !sn.isEmpty()) valid = Util.minMaxStringSize(3, 60, sn, "campo Sobrenome");
+
         if(valid && !pn.isEmpty()) valid = Util.minMaxStringSize(11, 12, pn, "campo Telefone");
 
         return valid;

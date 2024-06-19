@@ -66,10 +66,6 @@ public class CompanyService {
         return valid;
     }
 
-    private static void deleteJustForAMethod(List<CompanyEntity> companies, Integer id) {
-        companies.removeIf(company -> company.getId().equals(id));
-    }
-
     public static void createEmptyCompany(){
         CompanyRepository.update(new CompanyEntity(0,"Sem empresa"," - "," - "));
     }
