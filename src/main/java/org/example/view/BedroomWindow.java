@@ -33,6 +33,7 @@ public class BedroomWindow extends JFrame {
     private Color blueColor = new Color(0, 128, 192);
     private Color redColor = new Color(128, 0, 0);
     private String nightValue;
+    private BedroomEntity bedroom;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -48,7 +49,7 @@ public class BedroomWindow extends JFrame {
     public BedroomWindow(BedroomEntity bedroomEntity) {
         initializeWindow();
         initializeContentPane();
-        initializeTopPanel(); // This will now initialize the panel variable
+        initializeTopPanel();
         initializeMainPanels(bedroomEntity);
     }
 

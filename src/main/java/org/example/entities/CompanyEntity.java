@@ -35,6 +35,13 @@ public class CompanyEntity {
     public CompanyEntity() {
     }
 
+    public CompanyEntity(Integer id, String name,String cr, String cnpj) {
+        this.id = id;
+        this.name = name;
+        this.corporateReason = cr;
+        this.cnpj = cnpj;
+    }
+
     public CompanyEntity(String name) {
         this.name = name;
     }

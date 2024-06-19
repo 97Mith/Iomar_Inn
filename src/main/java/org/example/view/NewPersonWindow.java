@@ -90,7 +90,7 @@ public class NewPersonWindow extends JFrame {
             phoneNumberField.setText(person.getPhoneNumber());
 
             companiesComboBox.setModel(new DefaultComboBoxModel<>(CompanyService.getAll().toArray(new CompanyEntity[0])));
-            companiesComboBox.setSelectedItem(person.getCompany());
+            companiesComboBox.setSelectedItem(-1);
         }
     }
 

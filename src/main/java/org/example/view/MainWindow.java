@@ -8,6 +8,7 @@ import org.example.tablesUtil.MainTable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -346,13 +347,15 @@ public class MainWindow extends JFrame {
     private JPanel createButtonPanel(Integer num, Color backgroundColor) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1, 0, 20));
-
-        JButton editButton = createWhiteButton("Gerenciar quarto");
+        BedroomEntity be = BedroomService.getById(num);
+        JButton editButton = TableUtils.createButton("Gerenciar Quarto", Color.WHITE, Color.BLACK, openBedroomWindow(be));
         editButton.setBackground(backgroundColor);
-        //editButton.addActionListener(e -> new BedroomWindow(num).setVisible(true));
 
         panel.add(editButton);
         return panel;
+    }
+    private ActionListener openBedroomWindow(BedroomEntity bedroom) {
+        return e -> new BedroomWindow(bedroom).setVisible(true);
     }
 
     private void updatePanelColor(JPanel panel, LocalDateTime checkoutDateTime) {

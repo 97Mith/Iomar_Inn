@@ -55,6 +55,10 @@ public class CompanyService {
         companies.removeIf(company -> company.getId().equals(id));
     }
 
+    public static void emptyCompany(){
+        CompanyRepository.update(new CompanyEntity(0,"Sem empresa"," - "," - "));
+    }
+
     public static List<CompanyEntity> getByName(String name){
         List<CompanyEntity> companiesSearched = CompanyRepository.findByName(name);
         assert companiesSearched != null;

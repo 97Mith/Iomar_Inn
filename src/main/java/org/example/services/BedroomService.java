@@ -34,6 +34,7 @@ public class BedroomService {
             newBedroom(new BedroomEntity(4, false, "Disponível", 150));
         }
         newBedroom(new BedroomEntity(2, false, "Disponível", 90));
+        CompanyService.emptyCompany();
     }
 
     public static List<PersonEntity> loadAllInBedroom(BedroomEntity bedroomNumber){
