@@ -341,7 +341,12 @@ public class PersonManagerWindow extends JFrame {
         final int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
             PersonEntity p = PersonService.getById((int) model.getValueAt(selectedRow, 0));
+            System.out.println("Botão ok quarto = "+ bedroomEntity.getId());
+            System.out.println("Botão ok pessoa = "+ p.getName());
             PersonService.insertOrRemoveBedroom(p, bedroomEntity);
+
+            p = PersonService.getById((int) model.getValueAt(selectedRow, 0));
+
             updateAction(e);
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum campo selecionado");

@@ -47,10 +47,12 @@ public class BedroomWindow extends JFrame {
     }
 
     public BedroomWindow(BedroomEntity bedroomEntity) {
+        this.bedroom = bedroomEntity;
         initializeWindow();
         initializeContentPane();
         initializeTopPanel();
         initializeMainPanels(bedroomEntity);
+        System.out.println("Construtor "+ bedroomEntity.getId());
     }
 
     private void initializeWindow() {
@@ -111,6 +113,7 @@ public class BedroomWindow extends JFrame {
         JPanel panelCheckInOut = createCheckInOutPanel(bedroomEntity);
         JPanel panelProducts = createProductsPanel();
         JPanel panelLaundry = createLaundryPanel();
+        System.out.println("initializeMainPanels "+ bedroomEntity.getId());
 
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
@@ -142,6 +145,7 @@ public class BedroomWindow extends JFrame {
 
     private JPanel createCheckInOutPanel(BedroomEntity bedroomEntity) {
         List<PersonEntity> people = PersonService.getByBedroom(bedroomEntity);
+        System.out.println("createCheckInOutPanel "+ bedroomEntity.getId());
         DefaultTableModel model = PersonTable.createPeopleRoomTable(people);
         JPanel panelCheckInOut = new JPanel();
 
@@ -474,7 +478,8 @@ public class BedroomWindow extends JFrame {
     }
 
     private void addGuestAction(ActionEvent e) {
-        new PersonManagerWindow().setVisible(true);
+        System.out.println("Botão add "+ bedroom.getId());
+        new PersonManagerWindow(bedroom).setVisible(true);
     }
 
 }

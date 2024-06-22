@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="89c01a96-f2ea-4ba0-a813-577c9ac9c47d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/MainWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/BedroomWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/BedroomWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/PersonManagerWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/PersonManagerWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,9 +118,9 @@
       <list>
         <item itemvalue="Application.MainWindow" />
         <item itemvalue="Application.PersonManagerWindow" />
+        <item itemvalue="Application.BedroomWindow" />
         <item itemvalue="Application.CompanyManagerWindow" />
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.BedroomWindow" />
       </list>
     </recent_temporary>
   </component>
