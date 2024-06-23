@@ -34,6 +34,7 @@ public class BedroomWindow extends JFrame {
     private Color redColor = new Color(128, 0, 0);
     private String nightValue;
     private BedroomEntity bedroom;
+    private DefaultTableModel guestsModel;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -52,7 +53,6 @@ public class BedroomWindow extends JFrame {
         initializeContentPane();
         initializeTopPanel();
         initializeMainPanels(bedroomEntity);
-        System.out.println("Construtor "+ bedroomEntity.getId());
     }
 
     private void initializeWindow() {
@@ -75,13 +75,16 @@ public class BedroomWindow extends JFrame {
         lbl.setForeground(Color.WHITE);
         lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-        JLabel lbl_1 = new JLabel("1");
-        lbl_1.setForeground(Color.WHITE);
-        lbl_1.setFont(new Font("Verdana", Font.PLAIN, 20));
+        JLabel brNumberLabel = new JLabel(String.valueOf(bedroom.getId()));
+        brNumberLabel.setForeground(Color.WHITE);
+        brNumberLabel.setFont(new Font("Verdana", Font.PLAIN, 20));
 
         JLabel lblCompany = new JLabel("Empresa");
         lblCompany.setForeground(Color.WHITE);
         lblCompany.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
+        List<PersonEntity> people = PersonService.getByBedroom(bedroom);
+        if (people != null && !people.isEmpty()) lblCompany.setText(people.get(0).getCompany().getName());
 
         GroupLayout gl_panel = new GroupLayout(panel);
         gl_panel.setHorizontalGroup(
@@ -91,7 +94,7 @@ public class BedroomWindow extends JFrame {
                                 .addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
                                         .addGroup(gl_panel.createSequentialGroup()
                                                 .addGap(73)
-                                                .addComponent(lbl_1, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(brNumberLabel, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE))
                                         .addComponent(lbl, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE)
                                 .addComponent(lblCompany, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE))
@@ -102,7 +105,7 @@ public class BedroomWindow extends JFrame {
                                 .addGap(23)
                                 .addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
                                         .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-                                                .addComponent(lbl_1, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(brNumberLabel, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(lblCompany))
                                         .addComponent(lbl)))
         );
@@ -113,7 +116,6 @@ public class BedroomWindow extends JFrame {
         JPanel panelCheckInOut = createCheckInOutPanel(bedroomEntity);
         JPanel panelProducts = createProductsPanel();
         JPanel panelLaundry = createLaundryPanel();
-        System.out.println("initializeMainPanels "+ bedroomEntity.getId());
 
         GroupLayout gl_contentPane = new GroupLayout(contentPane);
         gl_contentPane.setHorizontalGroup(
@@ -145,9 +147,9 @@ public class BedroomWindow extends JFrame {
 
     private JPanel createCheckInOutPanel(BedroomEntity bedroomEntity) {
         List<PersonEntity> people = PersonService.getByBedroom(bedroomEntity);
-        System.out.println("createCheckInOutPanel "+ bedroomEntity.getId());
-        DefaultTableModel model = PersonTable.createPeopleRoomTable(people);
+        guestsModel = PersonTable.createPeopleRoomTable(people);
         JPanel panelCheckInOut = new JPanel();
+
 
         JLabel lblCheckIn = new JLabel("Check In");
         JLabel lblCheckOut = new JLabel("Check Out");
@@ -176,9 +178,7 @@ public class BedroomWindow extends JFrame {
 
         JButton btnAdd = TableUtils.createButton("+ Adicionar", blueColor, Color.WHITE, this::addGuestAction);
 
-        JButton btnRemoveGuest = new JButton("-  Remover");
-        btnRemoveGuest.setForeground(Color.WHITE);
-        btnRemoveGuest.setBackground(redColor);
+        JButton btnRemoveGuest = TableUtils.createButton("- Remover", redColor, Color.WHITE, this::removeGuest);
 
 
         JLabel lblRs = new JLabel("R$");
@@ -269,7 +269,7 @@ public class BedroomWindow extends JFrame {
         MaskFormatter phoneNumFormatter = formatation("(##)##### ####");
 
         tableGuests = new JTable();
-        tableGuests.setModel(model);
+        tableGuests.setModel(guestsModel);
         tableGuests.setFont(new Font("Arial", Font.BOLD, 12));
         tableGuests.getColumnModel().getColumn(0).setPreferredWidth(20);
         tableGuests.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer(phoneNumFormatter));
@@ -356,7 +356,7 @@ public class BedroomWindow extends JFrame {
         btnRemoveCloath.setForeground(Color.WHITE);
         btnRemoveCloath.setBackground(redColor);
 
-        JPanel panelTotal = createTotalPanel("Total:  R$", "150,00");
+        JPanel panelTotal = createTotalPanel("Total:  R$", "0,00");
 
         GroupLayout gl_panelLaundry = new GroupLayout(panelLaundry);
         gl_panelLaundry.setHorizontalGroup(
@@ -478,8 +478,17 @@ public class BedroomWindow extends JFrame {
     }
 
     private void addGuestAction(ActionEvent e) {
-        System.out.println("Botão add "+ bedroom.getId());
         new PersonManagerWindow(bedroom).setVisible(true);
+    }
+    private void removeGuest(ActionEvent e){
+        final int selectedRow = tableGuests.getSelectedRow();
+        if (selectedRow != -1) {
+            PersonEntity p = PersonService.getById((int) guestsModel.getValueAt(selectedRow, 0));
+            PersonService.insertOrRemoveBedroom(p, null);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum campo selecionado");
+        }
     }
 
 }
