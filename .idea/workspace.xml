@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89c01a96-f2ea-4ba0-a813-577c9ac9c47d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/view/AddItemsWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/BedroomWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/BedroomWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/PersonManagerWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/PersonManagerWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +47,20 @@
       <recent name="C:\Users\Matheus\Desktop\ProjetoIntegrador3\PousadaIomar_PI3\src\main\resources\META-INF" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MainWindow">
+  <component name="RunManager" selected="Application.AddItemsWindow">
+    <configuration name="AddItemsWindow" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.view.AddItemsWindow" />
+      <module name="PIPousada" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="BedroomWindow" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.view.BedroomWindow" />
       <module name="PIPousada" />
@@ -68,19 +80,6 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.view.CompanyManagerWindow" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
-      <module name="PIPousada" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -116,11 +115,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.AddItemsWindow" />
         <item itemvalue="Application.MainWindow" />
         <item itemvalue="Application.PersonManagerWindow" />
         <item itemvalue="Application.BedroomWindow" />
         <item itemvalue="Application.CompanyManagerWindow" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
