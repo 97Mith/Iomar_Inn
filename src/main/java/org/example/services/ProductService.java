@@ -11,6 +11,10 @@ public class ProductService {
     public static void insertProduct(ProductVO productEntity){
         try{
             ProductRepository.registerProduct(productEntity);
+            JOptionPane.showMessageDialog(
+                    null, "Item adicionado..",
+                    "Aviso", JOptionPane.INFORMATION_MESSAGE
+            );
         }catch (Exception e){
             e.printStackTrace();
             JOptionPane.showMessageDialog(
@@ -52,5 +56,19 @@ public class ProductService {
                     "Aviso", JOptionPane.ERROR_MESSAGE
             );
         }
+    }
+
+    public static boolean validateFields(String qnt, String description, String obs, String unValue){
+        boolean valid = Util.isNullOrEmpty(qnt, "campo Quantidade");
+        if(valid) valid = Util.minMaxStringSize(1, 2, qnt, "campo Quantidade");
+
+        if(valid) valid = Util.isNullOrEmpty(description, "campo Descrição");
+        if(valid) valid = Util.minMaxStringSize(3, 20, description, "campo Descrição");
+
+        if(valid) valid = Util.isNullOrEmpty(unValue, "Valor Unitário");
+        if(valid) valid = Util.minMaxStringSize(1, 4, unValue, "Valor Unitário");
+
+        if(valid && !obs.isEmpty()) valid = Util.minMaxStringSize(3, 60, obs, "campo Observação");
+        return valid;
     }
 }

@@ -10,7 +10,7 @@ public class ProductVO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer registerNum;
 
-    @Column(name = "product_name", nullable = false)
+    @Column(name = "product_name", nullable = true)
     private String name;
 
     @Column(name = "quantity")
@@ -55,6 +55,10 @@ public class ProductVO {
         this.guestId = guestId;
         this.obs = obs;
         this.isLaundry = isLaundry;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getRegisterNum() {
