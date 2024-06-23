@@ -1,22 +1,26 @@
 package org.example.view;
 
+import org.example.entities.BedroomEntity;
+import org.example.entities.PersonEntity;
+import org.example.services.BedroomService;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class AddItemsWindow extends JFrame{
-    public AddItemsWindow(){
+    public AddItemsWindow(BedroomEntity bedroom, boolean isLaundry){
         JTextField quantidadeField = new JTextField(5);
         JTextField descricaoField = new JTextField(30);
         JTextField observacaoField = new JTextField(20);
         JTextField valorUnitarioField = new JTextField(10);
 
-        String[] requerentes = {"Requerente 1", "Requerente 2", "Requerente 3"};
-        JComboBox<String> requerenteComboBox = new JComboBox<>(requerentes);
+        JComboBox<PersonEntity> requerenteComboBox = new JComboBox<>(Components.getGuests(bedroom));
 
         JButton okButton = new JButton("OK");
 
-        // Set layout
         setLayout(new GridBagLayout());
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
 
@@ -60,12 +64,14 @@ public class AddItemsWindow extends JFrame{
 
         setTitle("Adicionar ítem");
         setSize(800, 250);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new AddItemsWindow());
+        BedroomEntity b = BedroomService.getById(1);
+        SwingUtilities.invokeLater(() -> new AddItemsWindow(b, false));
     }
 
 }

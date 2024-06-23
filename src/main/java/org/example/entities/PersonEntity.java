@@ -95,4 +95,9 @@ public class PersonEntity {
     public CompanyEntity getCompany() {
         return company;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
