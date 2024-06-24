@@ -1,9 +1,11 @@
 package org.example.services;
 
+import org.example.entities.BedroomEntity;
 import org.example.entities.ProductVO;
 import org.example.repositories.ProductRepository;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductService {
@@ -24,13 +26,17 @@ public class ProductService {
         }
     }
 
-    public static List<ProductVO> getProductsInRoom(Integer bedroomNum, boolean isLaundry){
-        try{
-            return ProductRepository.findAll(bedroomNum, isLaundry);
-        }catch (Exception e){
+    public static List<ProductVO> getProductsInRoom(BedroomEntity bedroomNum, boolean isLaundry) {
+        List<ProductVO> products = new ArrayList<>();
+        try {
+            List<ProductVO> foundProducts = ProductRepository.findAll(bedroomNum, isLaundry);
+            if (foundProducts != null) {
+                products = foundProducts;
+            }
+        } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+        return products;
     }
 
     public static ProductVO getByRegister(Integer register){

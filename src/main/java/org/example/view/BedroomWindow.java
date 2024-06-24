@@ -5,10 +5,13 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
 import org.example.entities.BedroomEntity;
 import org.example.entities.PersonEntity;
+import org.example.entities.ProductVO;
 import org.example.services.BedroomService;
+import org.example.services.ProductService;
 import org.example.services.WindowService;
 import org.example.services.PersonService;
 import org.example.tablesUtil.PersonTable;
+import org.example.tablesUtil.ProductTable;
 
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Color;
@@ -35,6 +38,8 @@ public class BedroomWindow extends JFrame {
     private String nightValue;
     private BedroomEntity bedroom;
     private DefaultTableModel guestsModel;
+    private DefaultTableModel productModel;
+    private DefaultTableModel laundryModel;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -288,6 +293,7 @@ public class BedroomWindow extends JFrame {
 
         JScrollPane scrollPaneProducts = new JScrollPane();
         tableProducts = new JTable();
+
         scrollPaneProducts.setViewportView(tableProducts);
 
         JButton btnAddProduct = new JButton("+  Produto");
@@ -345,7 +351,8 @@ public class BedroomWindow extends JFrame {
         lblLavanderia.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
         JScrollPane scrollPaneLaundry = new JScrollPane();
-        tableLaundry = new JTable();
+        List<ProductVO> laundries = ProductService.getProductsInRoom(bedroom, true);
+        tableLaundry = new JTable(ProductTable.createProductTable(laundries));
         scrollPaneLaundry.setViewportView(tableLaundry);
 
         JButton btnAddCloath = new JButton("+  Roupa");

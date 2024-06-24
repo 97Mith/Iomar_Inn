@@ -1,5 +1,6 @@
 package org.example.repositories;
 
+import org.example.entities.BedroomEntity;
 import org.example.entities.ProductVO;
 
 import javax.persistence.EntityManager;
@@ -51,11 +52,11 @@ public class ProductRepository {
         }
     }
 
-    public static List<ProductVO> findAll(Integer roomNum, boolean isLaundry){
+    public static List<ProductVO> findAll(BedroomEntity roomNum, boolean isLaundry){
         EntityManager em = emf.createEntityManager();
         try{
             return em.createQuery(
-                            "SELECT p FROM ProductEntity p WHERE p.bedroomNumber = :roomNum AND p.isLaundry = :isLaundry",
+                            "SELECT p FROM ProductVO p WHERE p.bedroomNumber = :roomNum AND p.isLaundry = :isLaundry",
                             ProductVO.class)
                     .setParameter("roomNum", roomNum)
                     .setParameter("isLaundry", isLaundry)
