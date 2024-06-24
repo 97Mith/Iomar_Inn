@@ -101,6 +101,9 @@ public class PersonService {
 
     public static boolean isCpfExists(String cpf){
         try{
+            if(cpf.isEmpty()){
+                return true;
+            }
             if(PersonRepository.isCpfExists(cpf)){
                 JOptionPane.showMessageDialog(null,
                         "O CPF já existe.",

@@ -24,6 +24,8 @@ import javax.swing.text.MaskFormatter;
 import static org.example.view.CellRenderer.formatation;
 
 public class BedroomWindow extends JFrame {
+    private JDateChooser dateCheckIn;
+    private JDateChooser dateCheckOut;
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JPanel panel;
@@ -41,6 +43,7 @@ public class BedroomWindow extends JFrame {
     private DefaultTableModel laundryModel;
     List<ProductVO> listProd;
     List<ProductVO> listLaun;
+    List<PersonEntity> people;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -152,7 +155,8 @@ public class BedroomWindow extends JFrame {
     }
 
     private JPanel createCheckInOutPanel(BedroomEntity bedroomEntity) {
-        List<PersonEntity> people = PersonService.getByBedroom(bedroomEntity);
+        people = PersonService.getByBedroom(bedroomEntity);
+        assert people != null;
         guestsModel = PersonTable.createPeopleRoomTable(people);
         JPanel panelCheckInOut = new JPanel();
 
@@ -168,10 +172,11 @@ public class BedroomWindow extends JFrame {
         JDateChooser dateCheckOut = new JDateChooser();
         dateCheckOut.setDateFormatString("d '/' MM '/' y");
 
+        this.dateCheckIn = dateCheckIn;
+        this.dateCheckOut = dateCheckOut;
+
         textFieldDiscount = new JTextField();
         textFieldDiscount.setColumns(10);
-
-        WindowService.addDateChangeListener(dateCheckIn, dateCheckOut, bedroomEntity.getValue(), textFieldDiscount, this);
 
         JButton btnDoneStay = new JButton("Encerrar Estada");
         btnDoneStay.setForeground(Color.WHITE);
@@ -180,7 +185,7 @@ public class BedroomWindow extends JFrame {
 
 
 
-        JPanel panel_2_1 = createTotalPanel("Total:  R$", "0,00", "Valor diária                R$", nightValue);
+        JPanel panel_2_1 = createTotalPanel("Total:", "0,00", "Valor diária                R$", nightValue);
 
         JButton btnAdd = TableUtils.createButton("+ Adicionar", blueColor, Color.WHITE, this::addGuestAction);
 
@@ -448,10 +453,13 @@ public class BedroomWindow extends JFrame {
         panel_1.setBackground(new Color(215, 179, 11));
 
         JLabel lblTotal = new JLabel(totalLabelText);
-        lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 22));
+        lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
         JLabel lblValue = new JLabel(totalValueText);
-        lblValue.setFont(new Font("Tahoma", Font.PLAIN, 22));
+        lblValue.setFont(new Font("Tahoma", Font.PLAIN, 15));
+
+
+        WindowService.addDateChangeListener(dateCheckIn, dateCheckOut, bedroom.getValue(), textFieldDiscount, this, lblValue);
 
         JLabel lblNightValue = new JLabel(nightValueText);
         JLabel lblNightV = new JLabel(nightValue);
@@ -491,6 +499,10 @@ public class BedroomWindow extends JFrame {
     }
 
     private void addGuestAction(ActionEvent e) {
+        if (people.size() > bedroom.capacity - 1){
+            JOptionPane.showMessageDialog(null, "Quarto lotado!");
+            return;
+        }
         new PersonManagerWindow(bedroom).setVisible(true);
     }
 

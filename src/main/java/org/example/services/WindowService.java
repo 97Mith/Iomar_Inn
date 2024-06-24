@@ -35,7 +35,7 @@ public class WindowService {
         return totalValueWithDiscount;
     }
 
-    public static void addDateChangeListener(JDateChooser dateCheckIn, JDateChooser dateCheckOut, double dailyRate, JTextField discountPerDay, JFrame frame) {
+    public static void addDateChangeListener(JDateChooser dateCheckIn, JDateChooser dateCheckOut, double dailyRate, JTextField discountPerDay, JFrame frame, JLabel total) {
         dateCheckOut.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
                 if ("date".equals(evt.getPropertyName())) {
@@ -44,6 +44,7 @@ public class WindowService {
                             double discount = getValue(discountPerDay);
                             int difference = getDifferenceInDays(dateCheckIn, dateCheckOut);
                             double totalValue = calculateTotalValue(dailyRate, difference, discount);
+                            total.setText("R$ "+ totalValue);
                             JOptionPane.showMessageDialog(frame, "Total diárias: " + difference + "\nValor total com desconto: " + totalValue);
                         } else {
                             JOptionPane.showMessageDialog(frame, "Check-out deve ser uma data depois do check-in.");
