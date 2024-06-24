@@ -291,8 +291,9 @@ public class BedroomWindow extends JFrame {
         JLabel lblConsumo = new JLabel("Consumo");
         lblConsumo.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
+        List<ProductVO> products = ProductService.getProductsInRoom(bedroom, false);
         JScrollPane scrollPaneProducts = new JScrollPane();
-        tableProducts = new JTable();
+        tableProducts = new JTable(ProductTable.createProductTable(products));
 
         scrollPaneProducts.setViewportView(tableProducts);
 
