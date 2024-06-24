@@ -298,17 +298,15 @@ public class BedroomWindow extends JFrame {
         productModel = ProductTable.createProductTable(listProd);
         tableProducts = new JTable(productModel);
         tableProducts.getColumnModel().getColumn(0).setPreferredWidth(20);
-        tableProducts.getColumnModel().getColumn(3).setPreferredWidth(25);
-        tableProducts.getColumnModel().getColumn(4).setPreferredWidth(20);
+        tableProducts.getColumnModel().getColumn(1).setPreferredWidth(25);
         tableProducts.getColumnModel().getColumn(5).setPreferredWidth(20);
+        tableProducts.getColumnModel().getColumn(6).setPreferredWidth(20);
 
         scrollPaneProducts.setViewportView(tableProducts);
 
         JButton btnAddProduct = TableUtils.createButton("+ Produto", blueColor, Color.WHITE, this::addProduct);
 
-        JButton btnRemoveProduct = new JButton("-  Remover");
-        btnRemoveProduct.setForeground(Color.WHITE);
-        btnRemoveProduct.setBackground(redColor);
+        JButton btnRemoveProduct = TableUtils.createButton("- Remover", redColor, Color.WHITE, this::removeProduct);
 
         JPanel panelTotal = createTotalPanel("Total:  R$", "150,00");
 
@@ -361,17 +359,15 @@ public class BedroomWindow extends JFrame {
         laundryModel = ProductTable.createProductTable(listLaun);
         tableLaundry = new JTable(laundryModel);
         tableLaundry.getColumnModel().getColumn(0).setPreferredWidth(20);
-        tableLaundry.getColumnModel().getColumn(3).setPreferredWidth(25);
-        tableLaundry.getColumnModel().getColumn(4).setPreferredWidth(20);
+        tableLaundry.getColumnModel().getColumn(1).setPreferredWidth(20);
         tableLaundry.getColumnModel().getColumn(5).setPreferredWidth(20);
+        tableLaundry.getColumnModel().getColumn(6).setPreferredWidth(20);
 
         scrollPaneLaundry.setViewportView(tableLaundry);
 
         JButton btnAddCloath = TableUtils.createButton("+ Roupa", blueColor, Color.WHITE, this::addLaundry);
 
-        JButton btnRemoveCloath = new JButton("-  Remover");
-        btnRemoveCloath.setForeground(Color.WHITE);
-        btnRemoveCloath.setBackground(redColor);
+        JButton btnRemoveCloath = TableUtils.createButton("- Remover", redColor, Color.WHITE, this::removeCloath);
 
         JPanel panelTotal = createTotalPanel("Total:  R$", "0,00");
 
@@ -516,6 +512,26 @@ public class BedroomWindow extends JFrame {
             JOptionPane.showMessageDialog(null, "Nenhum campo selecionado");
         }
     }
+    private void removeCloath(ActionEvent e) {
+        final int selectedRow = tableLaundry.getSelectedRow();
+        if (selectedRow != -1){
+            ProductVO p = ProductService.getByRegister((int) laundryModel.getValueAt(selectedRow, 0));
+            ProductService.delete(p);
+            refreshTable(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum campo selecionado");
+        }
+    }
+    private void removeProduct(ActionEvent e) {
+        final int selectedRow = tableProducts.getSelectedRow();
+        if (selectedRow != -1){
+            ProductVO p = ProductService.getByRegister((int) productModel.getValueAt(selectedRow, 0));
+            ProductService.delete(p);
+            refreshTable(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum campo selecionado");
+        }
+    }
 
     public void refreshTable(boolean isLaundry) {
         if(isLaundry){
@@ -523,10 +539,10 @@ public class BedroomWindow extends JFrame {
             laundryModel.setRowCount(0);
             for (ProductVO productTable : listLaun) {
                 Object[] rowData = {
-                        productTable.getQnt(), productTable.getDescription(), productTable.getObs(),
-                        productTable.getGuestId().getName(),
-                        productTable.getUnValue(),
-                        productTable.getSubTotal()
+                        productTable.getRegisterNum(),
+                        productTable.getQnt(), productTable.getDescription(),
+                        productTable.getObs(), productTable.getGuestId().getName(),
+                        productTable.getUnValue(), productTable.getSubTotal()
                 };
                 laundryModel.addRow(rowData);
             }
@@ -535,7 +551,8 @@ public class BedroomWindow extends JFrame {
             productModel.setRowCount(0);
             for (ProductVO productTable : listProd) {
                 Object[] rowData = {
-                        productTable.getQnt(), productTable.getDescription(), productTable.getObs(),
+                        productTable.getRegisterNum(), productTable.getQnt(),
+                        productTable.getDescription(), productTable.getObs(),
                         productTable.getGuestId().getName(), productTable.getUnValue(),
                         productTable.getSubTotal()
                 };

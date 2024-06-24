@@ -8,6 +8,7 @@ import java.util.List;
 public class ProductTable {
     public static DefaultTableModel createProductTable(List<ProductVO> product) {
         String[] columnNames = {
+                "Id",
                 "Qnt",
                 "Descrição",
                 "Observações",
@@ -20,6 +21,7 @@ public class ProductTable {
 
         for (ProductVO productTable : product) {
             Object[] rowData = {
+                    productTable.getRegisterNum(),
                     productTable.getQnt(),
                     productTable.getDescription(),
                     productTable.getObs(),

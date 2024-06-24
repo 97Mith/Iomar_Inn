@@ -67,10 +67,10 @@ public class MainWindow extends JFrame {
     }
 
     private void layoutLateralPanel() {
-        JButton btnManageGuests = createButton("Consultar hospede");
-        JButton btnManageCompany = createButton("Gerenciar empresa");
-        JButton btnManageBedrooms = createButton("Gerenciar quartos");
-        JButton btnManageFinances = createButton("Gerenciar finanças");
+        JButton btnManageGuests = createButton("Consultar Hóspede");
+        JButton btnManageCompany = createButton("Gerenciar Empresa");
+        JButton btnManageBedrooms = createButton("Gerenciar Quartos");
+        JButton btnManageFinances = createButton("Gerenciar Finanças");
 
         JPanel panelMenu = createMenuPanel();
         JPanel panelInfo = createInfoPanel();
