@@ -4,12 +4,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
 import org.example.entities.BedroomEntity;
+import org.example.entities.CompanyEntity;
 import org.example.entities.PersonEntity;
 import org.example.entities.ProductVO;
-import org.example.services.BedroomService;
-import org.example.services.ProductService;
-import org.example.services.WindowService;
-import org.example.services.PersonService;
+import org.example.services.*;
 import org.example.tablesUtil.PersonTable;
 import org.example.tablesUtil.ProductTable;
 
@@ -18,6 +16,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.function.Function;
 import javax.swing.LayoutStyle;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
@@ -40,6 +39,8 @@ public class BedroomWindow extends JFrame {
     private DefaultTableModel guestsModel;
     private DefaultTableModel productModel;
     private DefaultTableModel laundryModel;
+    List<ProductVO> listProd;
+    List<ProductVO> listLaun;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -291,15 +292,19 @@ public class BedroomWindow extends JFrame {
         JLabel lblConsumo = new JLabel("Consumo");
         lblConsumo.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
-        List<ProductVO> products = ProductService.getProductsInRoom(bedroom, false);
+        listProd = ProductService.getProductsInRoom(bedroom, false);
+
         JScrollPane scrollPaneProducts = new JScrollPane();
-        tableProducts = new JTable(ProductTable.createProductTable(products));
+        productModel = ProductTable.createProductTable(listProd);
+        tableProducts = new JTable(productModel);
+        tableProducts.getColumnModel().getColumn(0).setPreferredWidth(20);
+        tableProducts.getColumnModel().getColumn(3).setPreferredWidth(25);
+        tableProducts.getColumnModel().getColumn(4).setPreferredWidth(20);
+        tableProducts.getColumnModel().getColumn(5).setPreferredWidth(20);
 
         scrollPaneProducts.setViewportView(tableProducts);
 
-        JButton btnAddProduct = new JButton("+  Produto");
-        btnAddProduct.setForeground(Color.WHITE);
-        btnAddProduct.setBackground(blueColor);
+        JButton btnAddProduct = TableUtils.createButton("+ Produto", blueColor, Color.WHITE, this::addProduct);
 
         JButton btnRemoveProduct = new JButton("-  Remover");
         btnRemoveProduct.setForeground(Color.WHITE);
@@ -352,13 +357,17 @@ public class BedroomWindow extends JFrame {
         lblLavanderia.setFont(new Font("Tahoma", Font.PLAIN, 16));
 
         JScrollPane scrollPaneLaundry = new JScrollPane();
-        List<ProductVO> laundries = ProductService.getProductsInRoom(bedroom, true);
-        tableLaundry = new JTable(ProductTable.createProductTable(laundries));
+        listLaun = ProductService.getProductsInRoom(bedroom, true);
+        laundryModel = ProductTable.createProductTable(listLaun);
+        tableLaundry = new JTable(laundryModel);
+        tableLaundry.getColumnModel().getColumn(0).setPreferredWidth(20);
+        tableLaundry.getColumnModel().getColumn(3).setPreferredWidth(25);
+        tableLaundry.getColumnModel().getColumn(4).setPreferredWidth(20);
+        tableLaundry.getColumnModel().getColumn(5).setPreferredWidth(20);
+
         scrollPaneLaundry.setViewportView(tableLaundry);
 
-        JButton btnAddCloath = new JButton("+  Roupa");
-        btnAddCloath.setForeground(Color.WHITE);
-        btnAddCloath.setBackground(blueColor);
+        JButton btnAddCloath = TableUtils.createButton("+ Roupa", blueColor, Color.WHITE, this::addLaundry);
 
         JButton btnRemoveCloath = new JButton("-  Remover");
         btnRemoveCloath.setForeground(Color.WHITE);
@@ -488,6 +497,15 @@ public class BedroomWindow extends JFrame {
     private void addGuestAction(ActionEvent e) {
         new PersonManagerWindow(bedroom).setVisible(true);
     }
+
+    private void addProduct(ActionEvent e) {
+        new AddItemsWindow(bedroom, false, this);
+    }
+
+    private  void addLaundry(ActionEvent e) {
+        new AddItemsWindow(bedroom, true, this);
+    }
+
     private void removeGuest(ActionEvent e){
         final int selectedRow = tableGuests.getSelectedRow();
         if (selectedRow != -1) {
@@ -496,6 +514,33 @@ public class BedroomWindow extends JFrame {
 
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum campo selecionado");
+        }
+    }
+
+    public void refreshTable(boolean isLaundry) {
+        if(isLaundry){
+            listLaun = ProductService.getProductsInRoom(bedroom, true);
+            laundryModel.setRowCount(0);
+            for (ProductVO productTable : listLaun) {
+                Object[] rowData = {
+                        productTable.getQnt(), productTable.getDescription(), productTable.getObs(),
+                        productTable.getGuestId().getName(),
+                        productTable.getUnValue(),
+                        productTable.getSubTotal()
+                };
+                laundryModel.addRow(rowData);
+            }
+        }else {
+            listProd = ProductService.getProductsInRoom(bedroom, false);
+            productModel.setRowCount(0);
+            for (ProductVO productTable : listProd) {
+                Object[] rowData = {
+                        productTable.getQnt(), productTable.getDescription(), productTable.getObs(),
+                        productTable.getGuestId().getName(), productTable.getUnValue(),
+                        productTable.getSubTotal()
+                };
+                productModel.addRow(rowData);
+            }
         }
     }
 

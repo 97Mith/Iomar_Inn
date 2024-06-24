@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 
 public class AddItemsWindow extends JFrame {
+    private BedroomWindow parent;
     private JTextField quantidadeField = new JTextField(5);
     private JTextField descricaoField = new JTextField(30);
     private JTextField observacaoField = new JTextField(20);
@@ -22,7 +23,8 @@ public class AddItemsWindow extends JFrame {
     private BedroomEntity bedroom;
     private boolean isL;
 
-    public AddItemsWindow(BedroomEntity bedroom, boolean isLaundry) {
+    public AddItemsWindow(BedroomEntity bedroom, boolean isLaundry, BedroomWindow parent) {
+        this.parent = parent;
         this.bedroom = bedroom;
         this.isL = isLaundry;
 
@@ -116,14 +118,11 @@ public class AddItemsWindow extends JFrame {
         p.setLaundry(isL);
 
         ProductService.insertProduct(p);
+        parent.refreshTable(isL);
         dispose();
     }
 
 
-    public static void main(String[] args) {
-        BedroomEntity b = BedroomService.getById(1);
-        SwingUtilities.invokeLater(() -> new AddItemsWindow(b, false));
-    }
 }
 
 class NumericDocumentFilter extends DocumentFilter {
