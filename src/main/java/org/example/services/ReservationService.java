@@ -59,10 +59,14 @@ public class ReservationService {
         if (reservationName == null || reservationName.isEmpty()) {
             return false;
         }
-        if (checkIn == null || checkOut == null) {
+        if (checkIn == null) {
             return false;
         }
-        if (checkOut.before(checkIn)) {
+        Date today = new Date();
+        if (checkIn.before(today)) {
+            return false;
+        }
+        if (checkOut != null && checkOut.before(checkIn)) {
             return false;
         }
         return true;

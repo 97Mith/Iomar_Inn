@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89c01a96-f2ea-4ba0-a813-577c9ac9c47d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/entities/ReservationEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repositories/ReservationRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/services/ReservationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/view/NewReservationWindow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/view/ReservationManagerWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/services/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/services/ReservationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/NewReservationWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/NewReservationWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +51,7 @@
       <recent name="org.example.view" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ReservationManagerWindow">
+  <component name="RunManager" selected="Application.MainWindow">
     <configuration name="AddItemsWindow" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.view.AddItemsWindow" />
       <module name="PIPousada" />
@@ -122,8 +119,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ReservationManagerWindow" />
         <item itemvalue="Application.MainWindow" />
+        <item itemvalue="Application.ReservationManagerWindow" />
         <item itemvalue="Application.BedroomWindow" />
         <item itemvalue="Application.AddItemsWindow" />
         <item itemvalue="Application.PersonManagerWindow" />

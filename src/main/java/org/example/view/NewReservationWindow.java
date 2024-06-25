@@ -3,6 +3,7 @@ package org.example.view;
 import com.toedter.calendar.JDateChooser;
 import org.example.entities.BedroomEntity;
 import org.example.entities.ReservationEntity;
+import org.example.services.BedroomService;
 import org.example.services.ReservationService;
 
 import javax.swing.*;
@@ -95,6 +96,7 @@ public class NewReservationWindow extends JFrame {
             reservation.setBedroom(bedroom);
 
             ReservationService.updateReservation(reservation);
+            BedroomService.updateStatus(bedroom, "Reservado p/" + reservationNameField.getText() + " p/ "+ checkInField.getDate());
             dispose();
 
         } else {
