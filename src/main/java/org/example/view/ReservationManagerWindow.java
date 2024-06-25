@@ -220,7 +220,6 @@ public class ReservationManagerWindow extends JFrame {
         return panel_1;
     }
     private void newReserve(ActionEvent e){
-        BedroomEntity b = BedroomService.getById(2);
-        new NewReservationWindow(new ReservationEntity(), b, this).setVisible(true);
+        new NewReservationWindow(new ReservationEntity(), this).setVisible(true);
     }
 }

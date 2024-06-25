@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class NewReservationWindow extends JFrame {
@@ -17,15 +18,15 @@ public class NewReservationWindow extends JFrame {
     private ReservationEntity reservation;
     private ReservationManagerWindow parent;
     private boolean editMode = false;
-    BedroomEntity bedroom;
+    private BedroomEntity bedroom;
     private JTextField reservationNameField;
     private JDateChooser checkInField;
     private JDateChooser checkOutField;
+    private JComboBox<Integer> roomNumberComboBox;
 
-    public NewReservationWindow(ReservationEntity reservation, BedroomEntity bedroom ,ReservationManagerWindow parent) {
+    public NewReservationWindow(ReservationEntity reservation, ReservationManagerWindow parent) {
         this.reservation = reservation;
         this.parent = parent;
-        this.bedroom = bedroom;
 
         setTitle("Reserva");
         setSize(400, 300);
@@ -51,6 +52,16 @@ public class NewReservationWindow extends JFrame {
         checkOutField.setFont(font);
         checkOutField.setDateFormatString("yyyy-MM-dd");
 
+        Integer[] roomNumbers = {1, 2, 3, 4, 5, 6};
+        roomNumberComboBox = new JComboBox<>(roomNumbers);
+        roomNumberComboBox.setFont(font);
+        roomNumberComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRoomNumber = (int) roomNumberComboBox.getSelectedItem();
+                bedroom = BedroomService.getById(selectedRoomNumber);
+            }
+        });
 
         JButton saveButton = new JButton("Salvar");
         saveButton.addActionListener(new ActionListener() {
@@ -61,13 +72,15 @@ public class NewReservationWindow extends JFrame {
         });
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(5, 2));
+        panel.setLayout(new GridLayout(6, 2));
         panel.add(new JLabel("Nome da Reserva:"));
         panel.add(reservationNameField);
         panel.add(new JLabel("Data de Check-In:"));
         panel.add(checkInField);
         panel.add(new JLabel("Data de Check-Out:"));
         panel.add(checkOutField);
+        panel.add(new JLabel("Número do Quarto:"));
+        panel.add(roomNumberComboBox);
         panel.add(saveButton);
 
         getContentPane().add(panel, BorderLayout.CENTER);
@@ -78,7 +91,7 @@ public class NewReservationWindow extends JFrame {
             reservationNameField.setText(reservation.getReservationName());
             checkInField.setDate(reservation.getCheckIn());
             checkOutField.setDate(reservation.getCheckOut());
-
+            editMode = true;
         }
     }
 
@@ -88,15 +101,16 @@ public class NewReservationWindow extends JFrame {
                 checkInField.getDate(),
                 checkOutField.getDate()
         )) {
-
+            bedroom = BedroomService.getById((int) roomNumberComboBox.getSelectedItem());
             reservation.setReservationName(reservationNameField.getText());
             reservation.setCheckIn(checkInField.getDate());
             reservation.setCheckOut(checkOutField.getDate());
-            bedroom.setStatus("Reservado");
             reservation.setBedroom(bedroom);
 
             ReservationService.updateReservation(reservation);
-            BedroomService.updateStatus(bedroom, "Reservado p/" + reservationNameField.getText() + " p/ "+ checkInField.getDate());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
+
+            BedroomService.updateStatus(bedroom, "Reservado p/"  + " p/ " + dateFormat.format(checkInField.getDate()) + "   (" + reservationNameField.getText() + ")");
             dispose();
 
         } else {
