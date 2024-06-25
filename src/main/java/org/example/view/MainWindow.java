@@ -69,7 +69,7 @@ public class MainWindow extends JFrame {
     private void layoutLateralPanel() {
         JButton btnManageGuests = createButton("Consultar Hóspede");
         JButton btnManageCompany = createButton("Gerenciar Empresa");
-        JButton btnManageBedrooms = TableUtils.createButton("Reservar Quartos", new Color(0, 128, 192), Color.WHITE, this::openReservation);
+        JButton btnManageBedrooms = TableUtils.createMenuButton("Reservar Quartos", new Color(0, 128, 192), Color.WHITE, this::openReservation,17);
         JButton btnManageFinances = createButton("Gerenciar Finanças");
 
         JPanel panelMenu = createMenuPanel();

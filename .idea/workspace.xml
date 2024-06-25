@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89c01a96-f2ea-4ba0-a813-577c9ac9c47d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/tablesUtil/ReservationTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/services/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/services/ReservationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/MainWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/NewReservationWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/NewReservationWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/ReservationManagerWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/ReservationManagerWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/TableUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/TableUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

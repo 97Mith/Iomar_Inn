@@ -59,4 +59,12 @@ public class TableUtils {
         button.addActionListener(action);
         return button;
     }
+    public static JButton createMenuButton(String text, Color bgColor, Color fgColor, ActionListener action, int size) {
+        JButton button = new JButton(text);
+        button.setBackground(bgColor);
+        button.setForeground(fgColor);
+        button.setFont(new Font("Arial", Font.PLAIN, size)); // Set the font size
+        button.addActionListener(action);
+        return button;
+    }
 }
