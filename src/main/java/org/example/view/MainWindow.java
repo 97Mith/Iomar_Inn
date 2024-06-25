@@ -307,18 +307,26 @@ public class MainWindow extends JFrame {
         table.setBackground(backgroundColor);
         JScrollPane scrollPane = new JScrollPane(table);
 
+        BedroomEntity bedroom = BedroomService.getById(bedroomCount + 1);
         panel.add(scrollPane, BorderLayout.CENTER);
-        panel.add(createCheckoutLabel(), BorderLayout.SOUTH);
+        panel.add(createCheckoutLabel(bedroom), BorderLayout.SOUTH);
 
         return panel;
     }
 
-    private JLabel createCheckoutLabel() {
-        checkoutDateTime = LocalDateTime.of(2024, 6, 29, 12, 0); // Exemplo: 31 de março de 2024, 12:00
+    private JLabel createCheckoutLabel(BedroomEntity bedroom) {
+        checkoutDateTime = LocalDateTime.of(2024, 6, 29, 12, 0);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         String formattedCheckoutDateTime = checkoutDateTime.format(formatter);
 
-        JLabel label = new JLabel("Data de Checkout: " + formattedCheckoutDateTime);
+        JLabel label = new JLabel(bedroom.getStatus());
+        switch (bedroom.getStatus()) {
+            case "Disponível" -> label.setForeground(new Color(12, 150, 100));
+            case "Ocupado" -> label.setForeground(new Color(122, 0, 0));
+            case "Reservado" -> label.setText("Reservado para dia " + formattedCheckoutDateTime + "Empresa");
+        }
+        System.out.print(bedroom.getId() + " " + bedroom.getStatus());
+
         label.setHorizontalAlignment(SwingConstants.CENTER);
         return label;
     }

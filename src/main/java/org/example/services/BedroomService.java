@@ -25,7 +25,19 @@ public class BedroomService {
             return false;
         }
     }
-
+    public static boolean updateStatus(BedroomEntity bedroom, String status){
+        try{
+            bedroom.setStatus(status);
+            BedroomRepository.createBedroom(bedroom);
+            return true;
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,
+                    "Erro ao atualizar quarto!",
+                    "Aviso",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
     public static void standardCreate(){
         for(int i = 1; i <= 3; i++){
             newBedroom(new BedroomEntity(4, true, "Disponível", 150));

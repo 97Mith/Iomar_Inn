@@ -52,7 +52,7 @@ public class BedroomEntity {
         this.hasBathroom = hasBathroom;
     }
 
-    public String status() {
+    public String getStatus() {
         return status;
     }
 

@@ -3,9 +3,7 @@ package org.example.view;
 import org.example.entities.BedroomEntity;
 import org.example.entities.CompanyEntity;
 import org.example.entities.PersonEntity;
-import org.example.repositories.PersonRepository;
 import org.example.services.BedroomService;
-import org.example.services.CompanyService;
 import org.example.services.PersonService;
 
 import java.awt.*;
@@ -20,11 +18,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.text.MaskFormatter;
 
 import static org.example.tablesUtil.PersonTable.createPeopleTable;
-import static org.example.view.CellRenderer.formatation;
 
 public class PersonManagerWindow extends JFrame {
 
@@ -342,8 +338,7 @@ public class PersonManagerWindow extends JFrame {
         if (selectedRow != -1) {
             PersonEntity p = PersonService.getById((int) model.getValueAt(selectedRow, 0));
             PersonService.insertOrRemoveBedroom(p, bedroomEntity);
-
-            p = PersonService.getById((int) model.getValueAt(selectedRow, 0));
+            BedroomService.updateStatus(bedroomEntity, "Ocupado");
 
             updateAction(e);
         } else {

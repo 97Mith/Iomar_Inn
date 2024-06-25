@@ -77,7 +77,7 @@ public class BedroomWindow extends JFrame {
     }
 
     private void initializeTopPanel() {
-        panel = new JPanel(); // Initialize the panel here
+        panel = new JPanel();
         panel.setBackground(blueColor);
 
         JLabel lbl = new JLabel("Quarto");
@@ -519,6 +519,9 @@ public class BedroomWindow extends JFrame {
         if (selectedRow != -1) {
             PersonEntity p = PersonService.getById((int) guestsModel.getValueAt(selectedRow, 0));
             PersonService.insertOrRemoveBedroom(p, null);
+
+            List<PersonEntity> listIsEmpty = BedroomService.loadAllInBedroom(bedroom);
+            if(listIsEmpty.isEmpty()) BedroomService.updateStatus(bedroom, "Disponível");
 
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum campo selecionado");
