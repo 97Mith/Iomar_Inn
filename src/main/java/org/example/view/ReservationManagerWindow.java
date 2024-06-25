@@ -1,13 +1,19 @@
 package org.example.view;
 
 import org.example.entities.BedroomEntity;
+import org.example.entities.PersonEntity;
 import org.example.entities.ReservationEntity;
 import org.example.services.BedroomService;
+import org.example.services.CompanyService;
+import org.example.services.PersonService;
+import org.example.services.ReservationService;
+import org.example.tablesUtil.ReservationTable;
 
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -16,10 +22,13 @@ import javax.swing.table.DefaultTableModel;
 
 public class ReservationManagerWindow extends JFrame {
 
+    DefaultTableModel model;
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTable table;
     private Color standardColor = new Color(64, 0, 64);
+    private Color redColor = new Color(128, 0, 0);
+
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -115,13 +124,8 @@ public class ReservationManagerWindow extends JFrame {
         btnPrint.setForeground(Color.WHITE);
         btnPrint.setBackground(new Color(64, 0, 64));
 
-        JButton btnDelete = new JButton("Excluir");
-        btnDelete.setForeground(Color.WHITE);
-        btnDelete.setBackground(new Color(128, 0, 0));
+        JButton btnDelete = TableUtils.createButton("Excluir", redColor, Color.WHITE, this::deleteReserve);
 
-        JButton btnEdit = new JButton("Editar");
-        btnEdit.setForeground(Color.WHITE);
-        btnEdit.setBackground(new Color(64, 0, 64));
 
         JPanel buttonPanel = new JPanel();
         GroupLayout gl_buttonPanel = new GroupLayout(buttonPanel);
@@ -132,7 +136,6 @@ public class ReservationManagerWindow extends JFrame {
                                 .addGap(18)
                                 .addComponent(btnPrint, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                                .addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(ComponentPlacement.RELATED)
                                 .addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE))
         );
@@ -141,7 +144,6 @@ public class ReservationManagerWindow extends JFrame {
                         .addComponent(btnNewReserve)
                         .addComponent(btnPrint)
                         .addComponent(btnDelete)
-                        .addComponent(btnEdit)
         );
         buttonPanel.setLayout(gl_buttonPanel);
         return buttonPanel;
@@ -152,27 +154,16 @@ public class ReservationManagerWindow extends JFrame {
         table = new JTable();
         JScrollPane scrollPane = new JScrollPane(table);
 
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("ID");
-        model.addColumn("Nome de reserva");
-        model.addColumn("Data de check in");
-        model.addColumn("Data de check out");
-        model.addColumn("Situação");
-        model.addColumn("Contato");
-
-        Object[] row1 = {"15","Ibrav", "12/12/2012","25/12/2012", "Pago", "+55 (11) 99999-9999"};
-        Object[] row2 = {"14","Estel", "25/03/2023","26/03/2021", "Pendente", "exemplo@gmail.com"};
-        model.addRow(row1);
-        model.addRow(row2);
+        List<ReservationEntity> reservations = ReservationService.getAll();
+        this.model = ReservationTable.createReservationTable(reservations);
 
         table.setModel(model);
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        table.getColumnModel().getColumn(0).setPreferredWidth(50);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        table.getColumnModel().getColumn(0).setPreferredWidth(20);
         table.getColumnModel().getColumn(1).setPreferredWidth(150);
-        table.getColumnModel().getColumn(2).setPreferredWidth(350);
+        table.getColumnModel().getColumn(2).setPreferredWidth(20);
         table.getColumnModel().getColumn(3).setPreferredWidth(250);
         table.getColumnModel().getColumn(4).setPreferredWidth(350);
-        table.getColumnModel().getColumn(5).setPreferredWidth(328);
 
         GroupLayout gl_panel = new GroupLayout(panel);
         gl_panel.setHorizontalGroup(
@@ -195,7 +186,7 @@ public class ReservationManagerWindow extends JFrame {
     private JPanel setupStatusPanel() {
         JPanel panel_1 = new JPanel();
         JLabel lblRecord = new JLabel("Total de registros:");
-        JLabel lblTotalOfRecords = new JLabel("0");
+        JLabel lblTotalOfRecords = new JLabel(String.valueOf(ReservationService.getAll().size()));
 
         GroupLayout gl_panel_1 = new GroupLayout(panel_1);
         gl_panel_1.setHorizontalGroup(
@@ -221,5 +212,28 @@ public class ReservationManagerWindow extends JFrame {
     }
     private void newReserve(ActionEvent e){
         new NewReservationWindow(new ReservationEntity(), this).setVisible(true);
+    }
+    private void deleteReserve(ActionEvent e){
+        final int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            BedroomEntity b = BedroomService.getById((Integer) model.getValueAt(selectedRow, 2));
+            ReservationService.deleteReserve((Integer) model.getValueAt(selectedRow, 0), this, b);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum campo selecionado");
+        }
+    }
+
+    public void refreshTable() {
+        List<ReservationEntity> allReserves = ReservationService.getAll();
+        model.setRowCount(0);
+        for (ReservationEntity reservationEntity : allReserves) {
+            Object[] rowData = {
+                    reservationEntity.getId(), reservationEntity.getReservationName(),
+                    reservationEntity.getBedroom().getId(),
+                    reservationEntity.getCheckIn(), reservationEntity.getCheckOut()
+            };
+            model.addRow(rowData);
+        }
     }
 }

@@ -110,7 +110,8 @@ public class NewReservationWindow extends JFrame {
             ReservationService.updateReservation(reservation);
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
 
-            BedroomService.updateStatus(bedroom, "Reservado p/"  + " p/ " + dateFormat.format(checkInField.getDate()) + "   (" + reservationNameField.getText() + ")");
+            BedroomService.updateStatus(bedroom, "Reservado "  +  dateFormat.format(checkInField.getDate()) + "   (" + reservationNameField.getText() + ")");
+            parent.refreshTable();
             dispose();
 
         } else {

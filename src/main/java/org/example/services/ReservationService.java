@@ -1,10 +1,13 @@
 package org.example.services;
 
+import org.example.entities.BedroomEntity;
 import org.example.entities.ReservationEntity;
 import org.example.repositories.ReservationRepository;
+import org.example.view.ReservationManagerWindow;
 
 import javax.swing.*;
 import java.util.Date;
+import java.util.List;
 
 public class ReservationService {
 
@@ -26,13 +29,16 @@ public class ReservationService {
         }
     }
 
-    public static boolean deleteReserve(Integer reservationId) {
+    public static boolean deleteReserve(Integer reservationId, ReservationManagerWindow parent, BedroomEntity bedroom) {
         try{
             ReservationRepository.deleteReserve(reservationId);
             JOptionPane.showMessageDialog(
                     null, "Reserva deletada!.",
                     "Aviso", JOptionPane.INFORMATION_MESSAGE
             );
+            BedroomService.updateStatus(bedroom, "Disponível");
+            parent.refreshTable();
+
             return true;
         }catch (Exception e){
             e.printStackTrace();
@@ -44,19 +50,20 @@ public class ReservationService {
         }
     }
 
-    public static void getAll(){
+    public static List<ReservationEntity> getAll(){
         try{
-            ReservationRepository.findAll();
+            return ReservationRepository.findAll();
         }catch (Exception e){
             e.printStackTrace();
             JOptionPane.showMessageDialog(
                     null, "Erro ao carregar reservas.",
                     "Aviso", JOptionPane.ERROR_MESSAGE
             );
+            return null;
         }
     }
     public static boolean validateFields(String reservationName, Date checkIn, Date checkOut) {
-        if (reservationName == null || reservationName.isEmpty()) {
+        if (!Util.minMaxStringSize(3, 20, reservationName, "Campo Nome da Reserva")) {
             return false;
         }
         if (checkIn == null) {

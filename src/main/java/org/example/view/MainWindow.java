@@ -69,7 +69,7 @@ public class MainWindow extends JFrame {
     private void layoutLateralPanel() {
         JButton btnManageGuests = createButton("Consultar Hóspede");
         JButton btnManageCompany = createButton("Gerenciar Empresa");
-        JButton btnManageBedrooms = createButton("Gerenciar Quartos");
+        JButton btnManageBedrooms = TableUtils.createButton("Reservar Quartos", new Color(0, 128, 192), Color.WHITE, this::openReservation);
         JButton btnManageFinances = createButton("Gerenciar Finanças");
 
         JPanel panelMenu = createMenuPanel();
@@ -382,6 +382,10 @@ public class MainWindow extends JFrame {
         }
 
         panel.setBackground(backgroundColor);
+    }
+
+    private void openReservation(ActionEvent e){
+        new ReservationManagerWindow().setVisible(true);
     }
 
     public LocalDateTime getCheckoutDateTime() {
