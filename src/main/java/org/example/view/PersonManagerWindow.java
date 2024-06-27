@@ -33,6 +33,7 @@ public class PersonManagerWindow extends JFrame {
     private JComboBox<CompanyEntity> comboBox;
     private final Color standardColor = new Color(28, 130, 255);
     private final Color redColor = new Color(128, 0, 0);
+    private BedroomWindow parent;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -52,6 +53,11 @@ public class PersonManagerWindow extends JFrame {
     public PersonManagerWindow(BedroomEntity bedroomEntity) {
         setupFrame();
         initializeComponents(bedroomEntity);
+    }
+    public PersonManagerWindow(BedroomEntity bedroomEntity, BedroomWindow parent) {
+        setupFrame();
+        initializeComponents(bedroomEntity);
+        this.parent = parent;
     }
 
     private void setupFrame() {
@@ -339,7 +345,7 @@ public class PersonManagerWindow extends JFrame {
             PersonEntity p = PersonService.getById((int) model.getValueAt(selectedRow, 0));
             PersonService.insertOrRemoveBedroom(p, bedroomEntity);
             BedroomService.updateStatus(bedroomEntity, "Ocupado");
-
+            if(parent != null) parent.refreshGuests();
             updateAction(e);
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum campo selecionado");

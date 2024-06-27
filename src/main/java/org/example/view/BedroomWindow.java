@@ -504,7 +504,7 @@ public class BedroomWindow extends JFrame {
             JOptionPane.showMessageDialog(null, "Quarto lotado!");
             return;
         }
-        new PersonManagerWindow(bedroom).setVisible(true);
+        new PersonManagerWindow(bedroom, this).setVisible(true);
     }
 
     private void addProduct(ActionEvent e) {
@@ -523,6 +523,7 @@ public class BedroomWindow extends JFrame {
 
             List<PersonEntity> listIsEmpty = BedroomService.loadAllInBedroom(bedroom);
             if(listIsEmpty.isEmpty()) BedroomService.updateStatus(bedroom, "Disponível");
+            refreshGuests();
 
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum campo selecionado");
@@ -546,6 +547,19 @@ public class BedroomWindow extends JFrame {
             refreshTable(false);
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum campo selecionado");
+        }
+    }
+
+    public void refreshGuests(){
+        people = PersonService.getByBedroom(bedroom);
+        guestsModel.setRowCount(0);
+        for(PersonEntity person : people) {
+            Object[] rowData = {
+                    person.getId(),
+                    person.getName(), person.getSurName(),
+                    person.getPhoneNumber(), person.getCpf()
+            };
+            guestsModel.addRow(rowData);
         }
     }
 
