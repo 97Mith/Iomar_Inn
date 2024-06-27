@@ -32,13 +32,13 @@ public class NightsEntity {
     private double nightsValue;
 
     @OneToMany
-    @JoinColumn(name = "products", referencedColumnName = "resgister")
+    @JoinColumn(name = "products")
     private List<ProductVO> products;
     @Column(name = "products_value")
     private double productsValue;
 
     @OneToMany
-    @JoinColumn(name = "products", referencedColumnName = "resgister")
+    @JoinColumn(name = "products")
     private List<ProductVO> laundries;
     @Column(name = "laundry_value")
     private double laundryValue;

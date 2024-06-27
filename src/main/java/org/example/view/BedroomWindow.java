@@ -312,8 +312,8 @@ public class BedroomWindow extends JFrame {
         JButton btnAddProduct = TableUtils.createButton("+ Produto", blueColor, Color.WHITE, this::addProduct);
 
         JButton btnRemoveProduct = TableUtils.createButton("- Remover", redColor, Color.WHITE, this::removeProduct);
-
-        JPanel panelTotal = createTotalPanel("Total:  R$", "150,00");
+        double total = ProductService.calculateTotalSubTotal(listProd);
+        JPanel panelTotal = createTotalPanel("Total:  R$", String.valueOf(total));
 
         GroupLayout gl_panelProducts = new GroupLayout(panelProducts);
         gl_panelProducts.setHorizontalGroup(
@@ -374,7 +374,8 @@ public class BedroomWindow extends JFrame {
 
         JButton btnRemoveCloath = TableUtils.createButton("- Remover", redColor, Color.WHITE, this::removeCloath);
 
-        JPanel panelTotal = createTotalPanel("Total:  R$", "0,00");
+        double total = ProductService.calculateTotalSubTotal(listLaun);
+        JPanel panelTotal = createTotalPanel("Total:  R$", String.valueOf(total));
 
         GroupLayout gl_panelLaundry = new GroupLayout(panelLaundry);
         gl_panelLaundry.setHorizontalGroup(

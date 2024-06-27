@@ -77,6 +77,16 @@ public class ProductService {
         if(valid && !obs.isEmpty()) valid = Util.minMaxStringSize(3, 60, obs, "campo Observação");
         return valid;
     }
+
+    public static double calculateTotalSubTotal(List<ProductVO> productList) {
+        double totalSubTotal = 0.0;
+
+        for (ProductVO product : productList) {
+            totalSubTotal += product.getSubTotal();
+        }
+
+        return totalSubTotal;
+    }
 }
 
 
