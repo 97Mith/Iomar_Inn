@@ -43,26 +43,29 @@ public class CompanyRepository {
         }
     }
 
-    public static boolean isCnpjExists(String cnpj) {
+    public static boolean isCnpjExists(String cnpj, boolean isEditMode) {
         EntityManager em = emf.createEntityManager();
         try {
             String query = "SELECT COUNT(c) FROM CompanyEntity c WHERE c.cnpj = :cnpj";
             Long count = em.createQuery(query, Long.class)
                     .setParameter("cnpj", cnpj)
                     .getSingleResult();
-            return count > 1;
+            if(isEditMode) return count > 1;
+            return count > 0;
         } finally {
             em.close();
         }
     }
-    public static boolean isCrExists(String corporateReason) {
+    public static boolean isCrExists(String corporateReason, boolean isEditMode) {
         EntityManager em = emf.createEntityManager();
         try {
             String query = "SELECT COUNT(c) FROM CompanyEntity c WHERE c.corporateReason = :corporateReason";
             Long count = em.createQuery(query, Long.class)
                     .setParameter("corporateReason", corporateReason)
                     .getSingleResult();
-            return count > 1;
+            if(isEditMode) return count > 1;
+            return count > 0;
+
         } finally {
             em.close();
         }

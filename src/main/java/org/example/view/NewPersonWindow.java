@@ -27,7 +27,6 @@ public class NewPersonWindow extends JFrame {
         this.person = person;
         this.parent = parent;
         this.isEditMode = parent.isEditMode();
-        System.out.print(this.isEditMode);
 
         setTitle("Hospede");
         setSize(400, 300);

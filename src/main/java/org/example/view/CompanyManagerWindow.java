@@ -28,6 +28,7 @@ public class CompanyManagerWindow extends JFrame {
     private JTextField txtSearch;
     private JTable table;
     private DefaultTableModel model;
+    private boolean isEdit;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -264,6 +265,7 @@ public class CompanyManagerWindow extends JFrame {
     }
 
     private void newCompanyAction(ActionEvent e) {
+        this.isEdit = false;
         CompanyEntity company = new CompanyEntity();
         NewCompanyWindow newCompanyWindow = new NewCompanyWindow(company, this);
         newCompanyWindow.setVisible(true);
@@ -275,6 +277,7 @@ public class CompanyManagerWindow extends JFrame {
     }
 
     private void editAction(ActionEvent e) {
+        this.isEdit = true;
         final int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
             Integer companyId = (Integer) model.getValueAt(selectedRow, 0);
@@ -315,4 +318,7 @@ public class CompanyManagerWindow extends JFrame {
         }
     }
 
+    public boolean isEditMode() {
+        return isEdit;
+    }
 }

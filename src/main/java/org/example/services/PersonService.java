@@ -137,29 +137,6 @@ public class PersonService {
         return valid;
     }
 
-    public static boolean isPersonCpfUnique(List<PersonEntity> personList, JTextField textField) {
-        if (textField == null) {
-            return true;
-        }
-
-        String text = textField.getText().trim();
-
-        if (text.isEmpty()) {
-            return true;
-        }
-
-        for (PersonEntity person : personList) {
-            if (person.getCpf().equals(text)) {
-                JOptionPane.showMessageDialog(
-                        null, "Esse número de CPF já foi cadastrado.",
-                        "Aviso", JOptionPane.WARNING_MESSAGE
-                );
-                return false;
-            }
-        }
-
-        return true;
-    }
     public static List<PersonEntity> getByName(String name){
         List<PersonEntity> peopleSearched = PersonRepository.getbyName(name);
         assert peopleSearched != null;

@@ -45,17 +45,17 @@ public class CompanyService {
         }
     }
 
-    public static boolean validateFields(String name, String cr, String cnpj, String si, String pn, String email){
+    public static boolean validateFields(String name, String cr, String cnpj, String si, String pn, String email, boolean isEditMode){
         boolean valid = Util.isNullOrEmpty(name, "campo nome");
         if(valid) valid = Util.minMaxStringSize(3, 35, name, "campo nome");
 
         if(valid) valid = Util.isNullOrEmpty(cr, "campo Razão social");
         if(valid) valid = Util.minMaxStringSize(5, 60, cr, "campo Razão Social");
-        if(valid) valid = isCrExists(cr);
+        if(valid) valid = isCrExists(cr, isEditMode);
 
         if(valid) valid = Util.isNullOrEmpty(cnpj, "CNPJ");
         if(valid) valid = Util.minMaxStringSize(14, 15, cnpj, "CNPJ");
-        if(valid) valid = isCnpjExists(cnpj);
+        if(valid) valid = isCnpjExists(cnpj, isEditMode);
 
         if(valid && !si.isEmpty()) valid = Util.minMaxStringSize(7, 12, si, "campo Inscrição Estadual");
 
@@ -82,9 +82,9 @@ public class CompanyService {
         }
         return companiesSearched;
     }
-    public static boolean isCnpjExists(String cnpj){
+    public static boolean isCnpjExists(String cnpj, boolean isEditMode){
         try{
-            if(CompanyRepository.isCnpjExists(cnpj)){
+            if(CompanyRepository.isCnpjExists(cnpj, isEditMode)){
                 JOptionPane.showMessageDialog(null,
                         "O CNPJ já existe.",
                         "Aviso",
@@ -102,9 +102,9 @@ public class CompanyService {
             return false;
         }
     }
-    public static boolean isCrExists(String cr){
+    public static boolean isCrExists(String cr, boolean isEditMode){
         try{
-            if(CompanyRepository.isCrExists(cr)){
+            if(CompanyRepository.isCrExists(cr, isEditMode)){
                 JOptionPane.showMessageDialog(null,
                         "A Razão Social já existe.",
                         "Aviso",

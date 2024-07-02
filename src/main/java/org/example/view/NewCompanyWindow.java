@@ -20,10 +20,12 @@ public class NewCompanyWindow extends JFrame {
     private JTextField stateInscriptionField;
     private JTextField phoneNumberField;
     private JTextField emailField;
+    private  boolean isEditMode;
 
     public NewCompanyWindow(CompanyEntity company, CompanyManagerWindow parent) {
         this.company = company;
         this.parent = parent;
+        this.isEditMode = parent.isEditMode();
 
         setTitle("Empresa");
         setSize(400, 300);
@@ -99,7 +101,7 @@ public class NewCompanyWindow extends JFrame {
     private void saveCompany() {
         if (CompanyService.validateFields(nameField.getText(), corporateReasonField.getText(),
                 cnpjField.getText(), stateInscriptionField.getText(),
-                phoneNumberField.getText(), emailField.getText())) {
+                phoneNumberField.getText(), emailField.getText(), isEditMode)) {
 
             company.setName(nameField.getText());
             company.setCorporateReason(corporateReasonField.getText());
