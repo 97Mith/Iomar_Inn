@@ -1,6 +1,7 @@
 package org.example.services;
 
 import com.toedter.calendar.JDateChooser;
+import org.example.entities.BedroomEntity;
 
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
@@ -14,11 +15,9 @@ public class WindowService {
     private static int getDifferenceInDays(JDateChooser dateCheckIn, JDateChooser dateCheckOut) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 
-        // Convertendo as datas do JDateChooser para LocalDate
         LocalDate checkInDate = LocalDate.parse(new SimpleDateFormat("d/MM/yyyy").format(dateCheckIn.getDate()), formatter);
         LocalDate checkOutDate = LocalDate.parse(new SimpleDateFormat("d/MM/yyyy").format(dateCheckOut.getDate()), formatter);
 
-        // Calculando a diferença em dias
         long daysBetween = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
 
         return (int) daysBetween;
@@ -35,7 +34,7 @@ public class WindowService {
         return totalValueWithDiscount;
     }
 
-    public static void addDateChangeListener(JDateChooser dateCheckIn, JDateChooser dateCheckOut, double dailyRate, JTextField discountPerDay, JFrame frame, JLabel total) {
+    public static void addDateChangeListener(BedroomEntity bedroom, JDateChooser dateCheckIn, JDateChooser dateCheckOut, double dailyRate, JTextField discountPerDay, JFrame frame, JLabel total) {
         dateCheckOut.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
                 if ("date".equals(evt.getPropertyName())) {
@@ -44,6 +43,7 @@ public class WindowService {
                             double discount = getValue(discountPerDay);
                             int difference = getDifferenceInDays(dateCheckIn, dateCheckOut);
                             double totalValue = calculateTotalValue(dailyRate, difference, discount);
+                            BedroomService.setDates(bedroom, dateCheckIn.getDate(), dateCheckOut.getDate(), totalValue);
                             total.setText("R$ "+ totalValue);
                             JOptionPane.showMessageDialog(frame, "Total diárias: " + difference + "\nValor total com desconto: " + totalValue);
                         } else {

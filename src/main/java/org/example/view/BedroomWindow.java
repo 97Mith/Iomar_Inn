@@ -168,9 +168,11 @@ public class BedroomWindow extends JFrame {
 
         JDateChooser dateCheckIn = new JDateChooser();
         dateCheckIn.setDateFormatString("d '/' MM '/' y");
+        dateCheckIn.setDate(bedroom.getCheckInDate());
 
         JDateChooser dateCheckOut = new JDateChooser();
         dateCheckOut.setDateFormatString("d '/' MM '/' y");
+        dateCheckOut.setDate(bedroom.getCheckOutDate());
 
         this.dateCheckIn = dateCheckIn;
         this.dateCheckOut = dateCheckOut;
@@ -185,7 +187,7 @@ public class BedroomWindow extends JFrame {
 
 
 
-        JPanel panel_2_1 = createTotalPanel("Total:", "0,00", "Valor diária                R$", nightValue);
+        JPanel panel_2_1 = createTotalPanel("Total:", String.valueOf(bedroom.getTotalOfStaying()), "Valor diária                R$", nightValue);
 
         JButton btnAdd = TableUtils.createButton("+ Adicionar", blueColor, Color.WHITE, this::addGuestAction);
 
@@ -460,7 +462,7 @@ public class BedroomWindow extends JFrame {
         lblValue.setFont(new Font("Tahoma", Font.PLAIN, 15));
 
 
-        WindowService.addDateChangeListener(dateCheckIn, dateCheckOut, bedroom.getValue(), textFieldDiscount, this, lblValue);
+        WindowService.addDateChangeListener(bedroom, dateCheckIn, dateCheckOut, bedroom.getValue(), textFieldDiscount, this, lblValue);
 
         JLabel lblNightValue = new JLabel(nightValueText);
         JLabel lblNightV = new JLabel(nightValue);

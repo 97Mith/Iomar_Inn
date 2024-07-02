@@ -32,13 +32,14 @@ public class PersonRepository {
             em.close();
         }
     }
-    public static boolean isCpfExists(String cpf) {
+    public static boolean isCpfExists(String cpf, boolean isEditMode) {
         EntityManager em = emf.createEntityManager();
         try {
             String query = "SELECT COUNT(c) FROM PersonEntity c WHERE c.cpf = :cpf";
             Long count = em.createQuery(query, Long.class)
                     .setParameter("cpf", cpf)
                     .getSingleResult();
+            if(isEditMode) return count > 1;
             return count > 0;
         } finally {
             em.close();

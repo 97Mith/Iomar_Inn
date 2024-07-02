@@ -67,7 +67,7 @@ public class CompanyService {
     }
 
     public static void createEmptyCompany(){
-        CompanyRepository.update(new CompanyEntity(0,"Sem empresa"," - "," - "));
+        CompanyRepository.update(new CompanyEntity(0,"-- sem empresa --"," - "," - "));
     }
 
     public static List<CompanyEntity> getByName(String name){

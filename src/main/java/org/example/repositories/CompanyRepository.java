@@ -50,7 +50,7 @@ public class CompanyRepository {
             Long count = em.createQuery(query, Long.class)
                     .setParameter("cnpj", cnpj)
                     .getSingleResult();
-            return count > 0;
+            return count > 1;
         } finally {
             em.close();
         }
@@ -62,7 +62,7 @@ public class CompanyRepository {
             Long count = em.createQuery(query, Long.class)
                     .setParameter("corporateReason", corporateReason)
                     .getSingleResult();
-            return count > 0;
+            return count > 1;
         } finally {
             em.close();
         }

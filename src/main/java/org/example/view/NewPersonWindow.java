@@ -21,10 +21,13 @@ public class NewPersonWindow extends JFrame {
     private BedroomEntity bedroom;
     private JTextField phoneNumberField;
     private JTextField cpfField;
+    private boolean isEditMode;
 
     public NewPersonWindow(PersonEntity person, PersonManagerWindow parent) {
         this.person = person;
         this.parent = parent;
+        this.isEditMode = parent.isEditMode();
+        System.out.print(this.isEditMode);
 
         setTitle("Hospede");
         setSize(400, 300);
@@ -96,7 +99,7 @@ public class NewPersonWindow extends JFrame {
 
     private void savePerson() {
         if (PersonService.validateFields(nameField.getText(), cpfField.getText(),
-                surNameField.getText(), phoneNumberField.getText())) {
+                surNameField.getText(), phoneNumberField.getText(), isEditMode)) {
 
             person.setName(nameField.getText());
             person.setSurName(surNameField.getText());

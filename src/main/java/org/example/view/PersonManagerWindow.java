@@ -34,6 +34,7 @@ public class PersonManagerWindow extends JFrame {
     private final Color standardColor = new Color(28, 130, 255);
     private final Color redColor = new Color(128, 0, 0);
     private BedroomWindow parent;
+    private boolean isEditMode;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -286,6 +287,7 @@ public class PersonManagerWindow extends JFrame {
     }
 
     private void newPersonAction(ActionEvent e) {
+        isEditMode = false;
         PersonEntity person = new PersonEntity();
         NewPersonWindow newPersonWindow = new NewPersonWindow(person, this);
         newPersonWindow.setVisible(true);
@@ -293,10 +295,12 @@ public class PersonManagerWindow extends JFrame {
 
     private void updateAction(ActionEvent e) {
         dispose();
-        SwingUtilities.invokeLater(() -> new PersonManagerWindow().setVisible(true));
+        List<PersonEntity> p = PersonService.getByBedroom(bedroomEntity);
+        if(p.size() < 4) SwingUtilities.invokeLater(() -> new PersonManagerWindow(bedroomEntity).setVisible(true));
     }
 
     private void editAction(ActionEvent e) {
+        isEditMode = true;
         final int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
             Integer personId = (Integer) model.getValueAt(selectedRow, 0);
@@ -352,6 +356,10 @@ public class PersonManagerWindow extends JFrame {
         }
     }
 
+    public boolean isEditMode() {
+        return isEditMode;
+    }
+
     static MaskFormatter formatation(String format) {
         MaskFormatter shape = null;
         try {
@@ -362,4 +370,5 @@ public class PersonManagerWindow extends JFrame {
         }
         return shape;
     }
+
 }

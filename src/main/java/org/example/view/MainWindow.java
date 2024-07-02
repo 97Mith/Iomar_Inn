@@ -67,8 +67,8 @@ public class MainWindow extends JFrame {
     }
 
     private void layoutLateralPanel() {
-        JButton btnManageGuests = TableUtils.createButton("Consultar Hóspede", new Color(0, 128, 192), Color.WHITE, this::openPersonManager);
-        JButton btnManageCompany = TableUtils.createButton("Gerenciar Empresa", new Color(0, 128, 192), Color.WHITE, this::openCompanyManager);
+        JButton btnManageGuests = TableUtils.createMenuButton("Consultar Hóspede", new Color(0, 128, 192), Color.WHITE, this::openPersonManager, 17);
+        JButton btnManageCompany = TableUtils.createMenuButton("Gerenciar Empresa", new Color(0, 128, 192), Color.WHITE, this::openCompanyManager, 17);
         JButton btnManageBedrooms = TableUtils.createMenuButton("Reservar Quartos", new Color(0, 128, 192), Color.WHITE, this::openReservation,17);
         JButton btnManageFinances = createButton("Gerenciar Finanças");
 
@@ -315,7 +315,7 @@ public class MainWindow extends JFrame {
     }
 
     private JLabel createCheckoutLabel(BedroomEntity bedroom) {
-        checkoutDateTime = LocalDateTime.of(2024, 6, 29, 12, 0);
+        checkoutDateTime = LocalDateTime.of(2024, 7, 29, 12, 0);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         String formattedCheckoutDateTime = checkoutDateTime.format(formatter);
 

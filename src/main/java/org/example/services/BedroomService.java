@@ -6,6 +6,7 @@ import org.example.repositories.BedroomRepository;
 import org.example.repositories.PersonRepository;
 
 import javax.swing.*;
+import java.util.Date;
 import java.util.List;
 
 public class BedroomService {
@@ -23,6 +24,16 @@ public class BedroomService {
                     "Aviso",
                     JOptionPane.ERROR_MESSAGE);
             return false;
+        }
+    }
+    public static void setDates(BedroomEntity bedroom, Date inDate, Date outDate, double value){
+        try{
+            bedroom.setCheckInDate(inDate);
+            bedroom.setCheckOutDate(outDate);
+            bedroom.setTotalOfStaying(value);
+            BedroomRepository.createBedroom(bedroom);
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
     public static boolean updateStatus(BedroomEntity bedroom, String status){

@@ -1,6 +1,8 @@
 package org.example.entities;
 
 import javax.persistence.*;
+import javax.xml.crypto.Data;
+import java.util.Date;
 
 @Entity
 @Table(name = "tb_bedrooms")
@@ -21,6 +23,15 @@ public class BedroomEntity {
 
     @Column(nullable = false)
     public double value;
+
+    @Column(name = "check_in")
+    private Date checkInDate;
+
+    @Column(name = "check_out")
+    private Date checkOutDate;
+
+    @Column(name = "general_total")
+    private double totalOfStaying;
 
     public BedroomEntity() {
     }
@@ -68,4 +79,27 @@ public class BedroomEntity {
         this.value = value;
     }
 
+    public Date getCheckInDate() {
+        return checkInDate;
+    }
+
+    public void setCheckInDate(Date checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+
+    public Date getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public void setCheckOutDate(Date checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+
+    public double getTotalOfStaying() {
+        return totalOfStaying;
+    }
+
+    public void setTotalOfStaying(double totalOfStaying) {
+        this.totalOfStaying = totalOfStaying;
+    }
 }
