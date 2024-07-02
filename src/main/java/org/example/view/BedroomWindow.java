@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
 import org.example.entities.*;
+import org.example.repositories.BedroomRepository;
+import org.example.repositories.PersonRepository;
 import org.example.services.*;
 import org.example.tablesUtil.PersonTable;
 import org.example.tablesUtil.ProductTable;
@@ -560,9 +562,19 @@ public class BedroomWindow extends JFrame {
             nights.setLaundryValue(ProductService.calculateTotalSubTotal(listLaun));
             nights.setNightsValue(bedroom.getTotalOfStaying());
 
+            bedroom.setCheckInDate(null);
+            bedroom.setCheckOutDate(null);
+            bedroom.setTotalOfStaying(0);
+            for(PersonEntity personList : people){
+                PersonRepository.insertOrRemoveBedroom(personList, null);
+            }
+            BedroomService.updateStatus(bedroom,"Disponível");
+            ProductService.removeAll(bedroom);
+            BedroomRepository.createBedroom(bedroom);
             NightService.updateReservation(nights);
+            dispose();
         } catch (Exception exception){
-            JOptionPane.showMessageDialog(null,"Deve ter pessoas no quarto!", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Devem ter pessoas no quarto!", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
 
     }

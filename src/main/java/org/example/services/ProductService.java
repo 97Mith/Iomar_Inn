@@ -38,6 +38,16 @@ public class ProductService {
         }
         return products;
     }
+    public static void removeAll(BedroomEntity bedroom){
+        List<ProductVO> pp = getProductsInRoom(bedroom, false);
+        List<ProductVO> pl = getProductsInRoom(bedroom, true);
+        for(ProductVO p : pp){
+            ProductRepository.deleteProduct(p);
+        }
+        for(ProductVO p : pl){
+            ProductRepository.deleteProduct(p);
+        }
+    }
 
     public static ProductVO getByRegister(Integer register){
         try{
