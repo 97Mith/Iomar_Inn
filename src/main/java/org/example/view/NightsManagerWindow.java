@@ -1,10 +1,11 @@
 package org.example.view;
 
-import org.example.entities.BedroomEntity;
-import org.example.entities.CompanyEntity;
-import org.example.entities.PersonEntity;
+import org.example.entities.*;
 import org.example.services.BedroomService;
+import org.example.services.NightService;
 import org.example.services.PersonService;
+import org.example.services.ReservationService;
+import org.example.tablesUtil.NightsTable;
 
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
@@ -132,21 +133,21 @@ public class NightsManagerWindow extends JFrame {
         MaskFormatter phoneNumberFormatter = formatation("+55 (##) ##### ####");
         MaskFormatter cpfFormatter = formatation("###.###.###-##");
 
-        List<PersonEntity> allPeople = PersonService.getAll();
-        assert allPeople != null;
-        model = createPeopleTable(allPeople);
+        List<NightEntity> all = NightService.getAll();
+        assert all != null;
+        model = NightsTable.createTable(all);
         table.setModel(model);
 
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        table.getColumnModel().getColumn(0).setPreferredWidth(50);
+        table.getColumnModel().getColumn(0).setPreferredWidth(0);
         table.getColumnModel().getColumn(1).setPreferredWidth(170);
-        table.getColumnModel().getColumn(2).setPreferredWidth(400);
+        table.getColumnModel().getColumn(2).setPreferredWidth(150);
         table.getColumnModel().getColumn(3).setPreferredWidth(150);
         table.getColumnModel().getColumn(4).setPreferredWidth(160);
         table.getColumnModel().getColumn(5).setPreferredWidth(130);
-        table.getColumnModel().getColumn(6).setPreferredWidth(430);
-        table.getColumnModel().getColumn(3).setCellRenderer(new CellRenderer(phoneNumberFormatter));
-        table.getColumnModel().getColumn(6).setCellRenderer(new CellRenderer(cpfFormatter));
+        table.getColumnModel().getColumn(6).setPreferredWidth(150);
+        table.getColumnModel().getColumn(7).setPreferredWidth(205);
+        table.getColumnModel().getColumn(8).setPreferredWidth(450);
 
         GroupLayout gl_panel = new GroupLayout(panel);
         gl_panel.setHorizontalGroup(
@@ -298,6 +299,22 @@ public class NightsManagerWindow extends JFrame {
     }
 
     public void refreshTable() {
+        List<NightEntity> all = NightService.getAll();
+        model.setRowCount(0);
+        for (NightEntity nightTable : all) {
+            Object[] rowData = {
+                    nightTable.getId(),
+                    nightTable.getCompany().getName().equals("-- sem empresa --") ? nightTable.getClient().getName() : nightTable.getCompany().getName(),
+                    nightTable.getBedroom().getId(),
+                    nightTable.isPaid(),
+                    nightTable.getProductsValue(),
+                    nightTable.getLaundryValue(),
+                    nightTable.getBedroom().getValue(),
+                    nightTable.getTotal(),
+                    nightTable.getObs()
+            };
+            model.addRow(rowData);
+        }
     }
 
     public void setTotal(String total) {

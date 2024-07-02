@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89c01a96-f2ea-4ba0-a813-577c9ac9c47d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/services/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/services/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/BedroomWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/BedroomWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/NightsManagerWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/NightsManagerWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +49,7 @@
       <recent name="org.example.view" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MainWindow">
+  <component name="RunManager" selected="Application.NightsManagerWindow">
     <configuration name="BedroomWindow" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.view.BedroomWindow" />
       <module name="PIPousada" />
@@ -119,9 +117,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.NightsManagerWindow" />
         <item itemvalue="Application.MainWindow" />
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.NightsManagerWindow" />
         <item itemvalue="Application.BedroomWindow" />
         <item itemvalue="Application.ReservationManagerWindow" />
       </list>
