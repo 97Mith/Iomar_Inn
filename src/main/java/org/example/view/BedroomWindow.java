@@ -3,10 +3,7 @@ import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JDateChooser;
-import org.example.entities.BedroomEntity;
-import org.example.entities.CompanyEntity;
-import org.example.entities.PersonEntity;
-import org.example.entities.ProductVO;
+import org.example.entities.*;
 import org.example.services.*;
 import org.example.tablesUtil.PersonTable;
 import org.example.tablesUtil.ProductTable;
@@ -180,9 +177,8 @@ public class BedroomWindow extends JFrame {
         textFieldDiscount = new JTextField();
         textFieldDiscount.setColumns(10);
 
-        JButton btnDoneStay = new JButton("Encerrar Estada");
-        btnDoneStay.setForeground(Color.WHITE);
-        btnDoneStay.setBackground(blueColor);
+        JButton btnDoneStay = TableUtils.createButton("Encerrar estada", blueColor, Color.WHITE, this::finish);
+
         nightValue = String.valueOf(bedroomEntity.getValue());
 
 
@@ -550,6 +546,25 @@ public class BedroomWindow extends JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum campo selecionado");
         }
+    }
+
+    public void finish(ActionEvent e) {
+        try{
+            NightEntity nights = new NightEntity();
+            PersonEntity person = people.get(0);
+            nights.setBedroom(bedroom);
+            nights.setCompany(person.getCompany());
+            nights.setClient(person);
+            nights.setPaid(false);
+            nights.setProductsValue(ProductService.calculateTotalSubTotal(listProd));
+            nights.setLaundryValue(ProductService.calculateTotalSubTotal(listLaun));
+            nights.setNightsValue(bedroom.getTotalOfStaying());
+
+            NightService.updateReservation(nights);
+        } catch (Exception exception){
+            JOptionPane.showMessageDialog(null,"Deve ter pessoas no quarto!", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+
     }
 
     public void refreshGuests(){
