@@ -1,6 +1,7 @@
 package org.example.view;
 
 import org.example.entities.*;
+import org.example.repositories.NightRepository;
 import org.example.services.BedroomService;
 import org.example.services.NightService;
 import org.example.services.PersonService;
@@ -91,7 +92,7 @@ public class NightsManagerWindow extends JFrame {
         JPanel topPanel = new JPanel();
         topPanel.setBackground(standardColor);
 
-        JLabel lblTitle = new JLabel("Pessoa");
+        JLabel lblTitle = new JLabel("Faturas");
         lblTitle.setForeground(Color.WHITE);
         lblTitle.setFont(new Font("Verdana", Font.PLAIN, 23));
 
@@ -264,27 +265,18 @@ public class NightsManagerWindow extends JFrame {
     }
 
     private void searchAction(ActionEvent e) {
-        List<PersonEntity> searchedPeople;
+        List<NightEntity> searchedNights;
         if (comboBox.getSelectedItem() != null){
-            searchedPeople = PersonService.getByCompany((CompanyEntity) comboBox.getSelectedItem());
+            searchedNights = NightRepository.getByCompany((CompanyEntity) comboBox.getSelectedItem());
             comboBox.setSelectedIndex(0);
-            refreshTable(searchedPeople, true);
+            refreshTable(searchedNights, true);
         }
     }
 
-    public void refreshTable(List<PersonEntity> allPeople, boolean isSearched) {
-        if (!isSearched) allPeople = PersonService.getAll();
-        model.setRowCount(0);
-        for (PersonEntity person : allPeople) {
-            Object[] rowData = {
-                    person.getId(), person.getName(), person.getSurName(), person.getPhoneNumber(),
-                    person.getBedroom(), person.getCompanyEntity(), person.getCpf()
-            };
-            model.addRow(rowData);
-        }
+    public void refreshTable(List<NightEntity> all, boolean isSearched) {
+        if (!isSearched) all = NightService.getAll();
+        refresh(all);
     }
-
-
 
 
     static MaskFormatter formatation(String format) {
@@ -298,8 +290,7 @@ public class NightsManagerWindow extends JFrame {
         return shape;
     }
 
-    public void refreshTable() {
-        List<NightEntity> all = NightService.getAll();
+    public void refresh(List<NightEntity> all) {
         model.setRowCount(0);
         for (NightEntity nightTable : all) {
             Object[] rowData = {

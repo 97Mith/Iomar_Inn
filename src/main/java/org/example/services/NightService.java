@@ -9,6 +9,7 @@ import org.example.view.NightsManagerWindow;
 import org.example.view.ReservationManagerWindow;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NightService {
@@ -37,7 +38,7 @@ public class NightService {
                     null, "Fatura deletada!.",
                     "Aviso", JOptionPane.INFORMATION_MESSAGE
             );
-            parent.refreshTable();
+            parent.refreshTable(new ArrayList<NightEntity>(), false);
 
             return true;
         }catch (Exception e){

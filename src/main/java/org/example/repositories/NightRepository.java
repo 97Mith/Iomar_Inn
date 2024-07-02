@@ -1,8 +1,6 @@
 package org.example.repositories;
 
-import org.example.entities.BedroomEntity;
-import org.example.entities.NightEntity;
-import org.example.entities.ReservationEntity;
+import org.example.entities.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -55,4 +53,17 @@ public class NightRepository {
             em.close();
         }
     }
+    public static List<NightEntity> getByCompany(CompanyEntity company) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery("SELECT p FROM NightEntity p WHERE p.company = :company", NightEntity.class)
+                    .setParameter("company", company)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to find persons by company", e);
+        } finally {
+            em.close();
+        }
+    }
+
 }
