@@ -305,7 +305,7 @@ public class BedroomWindow extends JFrame {
         JScrollPane scrollPaneProducts = new JScrollPane();
         productModel = ProductTable.createProductTable(listProd);
         tableProducts = new JTable(productModel);
-        tableProducts.getColumnModel().getColumn(0).setPreferredWidth(20);
+        tableProducts.getColumnModel().getColumn(0).setPreferredWidth(0);
         tableProducts.getColumnModel().getColumn(1).setPreferredWidth(25);
         tableProducts.getColumnModel().getColumn(5).setPreferredWidth(20);
         tableProducts.getColumnModel().getColumn(6).setPreferredWidth(20);
@@ -366,7 +366,7 @@ public class BedroomWindow extends JFrame {
         listLaun = ProductService.getProductsInRoom(bedroom, true);
         laundryModel = ProductTable.createProductTable(listLaun);
         tableLaundry = new JTable(laundryModel);
-        tableLaundry.getColumnModel().getColumn(0).setPreferredWidth(20);
+        tableLaundry.getColumnModel().getColumn(0).setPreferredWidth(0);
         tableLaundry.getColumnModel().getColumn(1).setPreferredWidth(20);
         tableLaundry.getColumnModel().getColumn(5).setPreferredWidth(20);
         tableLaundry.getColumnModel().getColumn(6).setPreferredWidth(20);
