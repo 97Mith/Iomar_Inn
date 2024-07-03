@@ -70,7 +70,7 @@ public class MainWindow extends JFrame {
         JButton btnManageGuests = TableUtils.createMenuButton("Consultar Hóspede", new Color(0, 128, 192), Color.WHITE, this::openPersonManager, 17);
         JButton btnManageCompany = TableUtils.createMenuButton("Gerenciar Empresa", new Color(0, 128, 192), Color.WHITE, this::openCompanyManager, 17);
         JButton btnManageBedrooms = TableUtils.createMenuButton("Reservar Quartos", new Color(0, 128, 192), Color.WHITE, this::openReservation,17);
-        JButton btnManageFinances = createButton("Gerenciar Finanças");
+        JButton btnManageFinances = TableUtils.createButton("Gerenciar Finanças", new Color(0, 128, 192), Color.WHITE, this::openFinances);
 
         JPanel panelMenu = createMenuPanel();
         JPanel panelInfo = createInfoPanel();
@@ -386,6 +386,9 @@ public class MainWindow extends JFrame {
 
     private void openReservation(ActionEvent e){
         new ReservationManagerWindow().setVisible(true);
+    }
+    private void openFinances(ActionEvent e) {
+        new NightsManagerWindow().setVisible(true);
     }
     private void openPersonManager(ActionEvent e){
         new PersonManagerWindow().setVisible(true);

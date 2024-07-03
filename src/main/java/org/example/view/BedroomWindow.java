@@ -15,7 +15,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.util.List;
-import java.util.function.Function;
 import javax.swing.LayoutStyle;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
@@ -40,6 +39,10 @@ public class BedroomWindow extends JFrame {
     private DefaultTableModel guestsModel;
     private DefaultTableModel productModel;
     private DefaultTableModel laundryModel;
+    private String lValue;
+    private String pValue;
+    JLabel lblTotalP;
+    JLabel lblTotalL;
     List<ProductVO> listProd;
     List<ProductVO> listLaun;
     List<PersonEntity> people;
@@ -312,8 +315,8 @@ public class BedroomWindow extends JFrame {
         JButton btnAddProduct = TableUtils.createButton("+ Produto", blueColor, Color.WHITE, this::addProduct);
 
         JButton btnRemoveProduct = TableUtils.createButton("- Remover", redColor, Color.WHITE, this::removeProduct);
-        double total = ProductService.calculateTotalSubTotal(listProd);
-        JPanel panelTotal = createTotalPanel("Total:  R$", String.valueOf(total));
+        pValue = String.valueOf(ProductService.calculateTotalSubTotal(listProd));
+        JPanel panelTotal = createTotalPanel("Total:  R$", pValue);
 
         GroupLayout gl_panelProducts = new GroupLayout(panelProducts);
         gl_panelProducts.setHorizontalGroup(
@@ -374,8 +377,8 @@ public class BedroomWindow extends JFrame {
 
         JButton btnRemoveCloath = TableUtils.createButton("- Remover", redColor, Color.WHITE, this::removeCloath);
 
-        double total = ProductService.calculateTotalSubTotal(listLaun);
-        JPanel panelTotal = createTotalPanel("Total:  R$", String.valueOf(total));
+        lValue = String.valueOf(ProductService.calculateTotalSubTotal(listLaun));
+        JPanel panelTotal = createTotalPanel2("Total:  R$", lValue);
 
         GroupLayout gl_panelLaundry = new GroupLayout(panelLaundry);
         gl_panelLaundry.setHorizontalGroup(
@@ -419,20 +422,20 @@ public class BedroomWindow extends JFrame {
         JPanel panel = new JPanel();
         panel.setBackground(new Color(215, 179, 11));
 
-        JLabel lblTotal = new JLabel(totalLabelText);
-        lblTotal.setFont(new Font("Tahoma", Font.PLAIN, 22));
+        JLabel lblText = new JLabel(totalLabelText);
+        lblText.setFont(new Font("Tahoma", Font.PLAIN, 22));
 
-        JLabel lblValue = new JLabel(totalValueText);
-        lblValue.setFont(new Font("Tahoma", Font.PLAIN, 22));
+        lblTotalP = new JLabel(totalValueText);
+        lblTotalP.setFont(new Font("Tahoma", Font.PLAIN, 22));
 
         GroupLayout gl_panel = new GroupLayout(panel);
         gl_panel.setHorizontalGroup(
                 gl_panel.createParallelGroup(Alignment.LEADING)
                         .addGroup(gl_panel.createSequentialGroup()
                                 .addGap(30)
-                                .addComponent(lblTotal)
+                                .addComponent(lblText)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                                .addComponent(lblValue, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblTotalP, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
                                 .addGap(20))
         );
         gl_panel.setVerticalGroup(
@@ -440,8 +443,41 @@ public class BedroomWindow extends JFrame {
                         .addGroup(gl_panel.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(lblValue, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblTotal))
+                                        .addComponent(lblTotalP, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblText))
+                                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
+        panel.setLayout(gl_panel);
+        return panel;
+    }
+    private JPanel createTotalPanel2(String totalLabelText, String totalValueText) {
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(215, 179, 11));
+
+        JLabel lblText = new JLabel(totalLabelText);
+        lblText.setFont(new Font("Tahoma", Font.PLAIN, 22));
+
+        lblTotalL = new JLabel(totalValueText);
+        lblTotalL.setFont(new Font("Tahoma", Font.PLAIN, 22));
+
+        GroupLayout gl_panel = new GroupLayout(panel);
+        gl_panel.setHorizontalGroup(
+                gl_panel.createParallelGroup(Alignment.LEADING)
+                        .addGroup(gl_panel.createSequentialGroup()
+                                .addGap(30)
+                                .addComponent(lblText)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                                .addComponent(lblTotalL, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
+                                .addGap(20))
+        );
+        gl_panel.setVerticalGroup(
+                gl_panel.createParallelGroup(Alignment.LEADING)
+                        .addGroup(gl_panel.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(lblTotalL, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblText))
                                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -561,6 +597,7 @@ public class BedroomWindow extends JFrame {
             nights.setProductsValue(ProductService.calculateTotalSubTotal(listProd));
             nights.setLaundryValue(ProductService.calculateTotalSubTotal(listLaun));
             nights.setNightsValue(bedroom.getTotalOfStaying());
+            nights.setTotal(ProductService.calculateTotalSubTotal(listProd) + ProductService.calculateTotalSubTotal(listLaun) + bedroom.getTotalOfStaying());
 
             bedroom.setCheckInDate(null);
             bedroom.setCheckOutDate(null);
@@ -605,6 +642,9 @@ public class BedroomWindow extends JFrame {
                 };
                 laundryModel.addRow(rowData);
             }
+            lValue = String.valueOf(ProductService.calculateTotalSubTotal(listLaun));
+            lblTotalL.setText(lValue);
+
         }else {
             listProd = ProductService.getProductsInRoom(bedroom, false);
             productModel.setRowCount(0);
@@ -617,6 +657,8 @@ public class BedroomWindow extends JFrame {
                 };
                 productModel.addRow(rowData);
             }
+            pValue = String.valueOf(ProductService.calculateTotalSubTotal(listProd));
+            lblTotalP.setText(pValue);
         }
     }
 

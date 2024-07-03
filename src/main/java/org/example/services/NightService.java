@@ -2,6 +2,7 @@ package org.example.services;
 
 import org.example.entities.BedroomEntity;
 import org.example.entities.NightEntity;
+import org.example.entities.ProductVO;
 import org.example.entities.ReservationEntity;
 import org.example.repositories.NightRepository;
 import org.example.repositories.ReservationRepository;
@@ -33,7 +34,7 @@ public class NightService {
 
     public static boolean delete(Integer reservationId, NightsManagerWindow parent) {
         try{
-            ReservationRepository.deleteReserve(reservationId);
+            NightRepository.delete(reservationId);
             JOptionPane.showMessageDialog(
                     null, "Fatura deletada!.",
                     "Aviso", JOptionPane.INFORMATION_MESSAGE
@@ -62,5 +63,20 @@ public class NightService {
             );
             return null;
         }
+    }
+
+    public static double calculateTotal(List<NightEntity> nightEntities, boolean isPaid) {
+        double totalSubTotal = 0.0;
+        if(isPaid){
+            for (NightEntity p : nightEntities) {
+                if(p.isPaid()) totalSubTotal += p.getTotal();
+            }
+        }else{
+                for (NightEntity p : nightEntities) {
+                    if(!p.isPaid()) totalSubTotal += p.getTotal();
+            }
+    }
+
+        return totalSubTotal;
     }
 }

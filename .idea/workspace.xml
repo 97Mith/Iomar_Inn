@@ -7,6 +7,10 @@
     <list default="true" id="89c01a96-f2ea-4ba0-a813-577c9ac9c47d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repositories/NightRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repositories/NightRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/services/NightService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/services/NightService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/tablesUtil/NightsTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/tablesUtil/NightsTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/BedroomWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/BedroomWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/MainWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/view/NightsManagerWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/view/NightsManagerWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,7 +55,7 @@
       <recent name="org.example.view" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.NightsManagerWindow">
+  <component name="RunManager" selected="Application.MainWindow">
     <configuration name="BedroomWindow" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.view.BedroomWindow" />
       <module name="PIPousada" />
@@ -119,8 +123,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.NightsManagerWindow" />
         <item itemvalue="Application.MainWindow" />
+        <item itemvalue="Application.NightsManagerWindow" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.BedroomWindow" />
         <item itemvalue="Application.ReservationManagerWindow" />

@@ -66,4 +66,15 @@ public class NightRepository {
         }
     }
 
+    public static NightEntity findById(Integer id) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.find(NightEntity.class, id);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to find person by id", e);
+        } finally {
+            em.close();
+        }
+    }
+
 }

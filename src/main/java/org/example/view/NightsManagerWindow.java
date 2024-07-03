@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.example.tablesUtil.PersonTable.createPeopleTable;
@@ -76,8 +77,8 @@ public class NightsManagerWindow extends JFrame {
         JPanel topPanel = createTopPanel();
         comboBox = new JComboBox(Components.getAllCompanyNames());
         JButton btnSearch = createButton("Ir", standardColor, Color.WHITE, this::searchAction);
-        JButton btnNewPerson = createButton("Recebido!", standardColor, Color.WHITE, this::updateAction);
-        JButton btnUpdate = createButton("Pendente", Color.DARK_GRAY, Color.WHITE, this::updateAction);
+        JButton btnNewPerson = createButton("Recebido!", standardColor, Color.WHITE, this::setPaid);
+        JButton btnUpdate = createButton("Pendente", Color.DARK_GRAY, Color.WHITE, this::setPendent);
         JButton btnDelete = createButton("Excluir", redColor, Color.WHITE, this::deleteAction);
 
         JPanel panel = createTablePanel();
@@ -172,9 +173,18 @@ public class NightsManagerWindow extends JFrame {
     private JPanel createStatusPanel(BedroomEntity bedroom) {
         JPanel panel1 = new JPanel();
 
-        JLabel lblRecord = new JLabel("Total de registros:");
-        int total = PersonService.getAll().size();
-        JLabel lblTotalOfRecords = new JLabel(String.valueOf(total));
+        List<NightEntity> all = NightService.getAll();
+        double totalPaid = NightService.calculateTotal(all, false);
+        double totalNoPaid = NightService.calculateTotal(all, true);
+
+        JLabel lblRecord = new JLabel("Total de pendentes:");
+        lblRecord.setForeground(redColor);
+        JLabel lblTotalOfRecords = new JLabel(String.valueOf(totalPaid));
+        lblTotalOfRecords.setForeground(redColor);
+
+        JLabel lblRecord2 = new JLabel("Total de Pagos:");
+        lblRecord2.setForeground(Color.BLUE);
+        JLabel lblTotalOfRecords2 = new JLabel(String.valueOf(totalNoPaid));
 
         GroupLayout gl_panel1 = new GroupLayout(panel1);
         gl_panel1.setHorizontalGroup(
@@ -184,7 +194,10 @@ public class NightsManagerWindow extends JFrame {
                                 .addComponent(lblRecord)
                                 .addPreferredGap(ComponentPlacement.RELATED)
                                 .addComponent(lblTotalOfRecords, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(ComponentPlacement.RELATED, 266, Short.MAX_VALUE)
+                                .addPreferredGap(ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                                .addComponent(lblRecord2)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(lblTotalOfRecords2, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
         );
         gl_panel1.setVerticalGroup(
@@ -193,7 +206,9 @@ public class NightsManagerWindow extends JFrame {
                                 .addContainerGap(13, Short.MAX_VALUE)
                                 .addGroup(gl_panel1.createParallelGroup(Alignment.BASELINE)
                                         .addComponent(lblRecord)
-                                        .addComponent(lblTotalOfRecords))
+                                        .addComponent(lblTotalOfRecords)
+                                        .addComponent(lblRecord2)
+                                        .addComponent(lblTotalOfRecords2))
                                 .addContainerGap())
         );
         panel1.setLayout(gl_panel1);
@@ -257,8 +272,8 @@ public class NightsManagerWindow extends JFrame {
     private void deleteAction(ActionEvent e) {
         final int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
-            //PersonService.deleteById((int) model.getValueAt(selectedRow, 0));
-            updateAction(e);
+            NightService.delete((int) model.getValueAt(selectedRow, 0), this);
+            refreshTable(new ArrayList<NightEntity>(), false);
         } else {
             JOptionPane.showMessageDialog(null, "Nenhum campo selecionado");
         }
@@ -297,7 +312,7 @@ public class NightsManagerWindow extends JFrame {
                     nightTable.getId(),
                     nightTable.getCompany().getName().equals("-- sem empresa --") ? nightTable.getClient().getName() : nightTable.getCompany().getName(),
                     nightTable.getBedroom().getId(),
-                    nightTable.isPaid(),
+                    nightTable.isPaid() ? "Pago" : "Pendente",
                     nightTable.getProductsValue(),
                     nightTable.getLaundryValue(),
                     nightTable.getBedroom().getValue(),
@@ -308,7 +323,24 @@ public class NightsManagerWindow extends JFrame {
         }
     }
 
-    public void setTotal(String total) {
-        this.total = total;
+    public void setPaid(ActionEvent e) {
+        final int selectedRow = table.getSelectedRow();
+        if(selectedRow != -1){
+            NightEntity n = NightRepository.findById((int) table.getValueAt(selectedRow, 0));
+            n.setPaid(true);
+            NightRepository.create(n);
+            refreshTable(new ArrayList<NightEntity>(), false);
+        }
+    }
+
+    public void setPendent(ActionEvent e) {
+        final int selectedRow = table.getSelectedRow();
+        if(selectedRow != -1){
+            NightEntity n = NightRepository.findById((int) table.getValueAt(selectedRow, 0));
+            n.setPaid(false);
+            NightRepository.create(n);
+            refreshTable(new ArrayList<NightEntity>(), false);
+        }
+
     }
 }

@@ -26,7 +26,7 @@ public class NightsTable {
                     nightTable.getId(),
                     nightTable.getCompany().getName().equals("-- sem empresa --") ? nightTable.getClient().getName() : nightTable.getCompany().getName(),
                     nightTable.getBedroom().getId(),
-                    nightTable.isPaid(),
+                    nightTable.isPaid() ? "Pago" : "Pendente",
                     nightTable.getProductsValue(),
                     nightTable.getLaundryValue(),
                     nightTable.getBedroom().getValue(),
