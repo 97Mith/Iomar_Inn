@@ -4,8 +4,6 @@ import org.example.entities.*;
 import org.example.repositories.NightRepository;
 import org.example.services.BedroomService;
 import org.example.services.NightService;
-import org.example.services.PersonService;
-import org.example.services.ReservationService;
 import org.example.tablesUtil.NightsTable;
 
 import javax.swing.*;
@@ -17,13 +15,9 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.example.tablesUtil.PersonTable.createPeopleTable;
 
 public class NightsManagerWindow extends JFrame {
 
@@ -32,7 +26,8 @@ public class NightsManagerWindow extends JFrame {
     private JTable table;
     private BedroomEntity bedroomEntity;
     private DefaultTableModel model;
-    private String total;
+    private JLabel lblTotalP;
+    private JLabel lblTotalNP;
     private JComboBox<CompanyEntity> comboBox;
     private final Color standardColor = new Color(28, 130, 50);
     private final Color redColor = new Color(128, 0, 0);
@@ -177,27 +172,27 @@ public class NightsManagerWindow extends JFrame {
         double totalPaid = NightService.calculateTotal(all, false);
         double totalNoPaid = NightService.calculateTotal(all, true);
 
-        JLabel lblRecord = new JLabel("Total de pendentes:");
-        lblRecord.setForeground(redColor);
-        JLabel lblTotalOfRecords = new JLabel(String.valueOf(totalPaid));
-        lblTotalOfRecords.setForeground(redColor);
+        JLabel lblTextp = new JLabel("Total de pendentes:");
+        lblTextp.setForeground(redColor);
+        lblTotalNP = new JLabel(String.valueOf(totalPaid));
+        lblTotalNP.setForeground(redColor);
 
         JLabel lblRecord2 = new JLabel("Total de Pagos:");
         lblRecord2.setForeground(Color.BLUE);
-        JLabel lblTotalOfRecords2 = new JLabel(String.valueOf(totalNoPaid));
+        lblTotalP = new JLabel(String.valueOf(totalNoPaid));
 
         GroupLayout gl_panel1 = new GroupLayout(panel1);
         gl_panel1.setHorizontalGroup(
                 gl_panel1.createParallelGroup(Alignment.LEADING)
                         .addGroup(gl_panel1.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(lblRecord)
+                                .addComponent(lblTextp)
                                 .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(lblTotalOfRecords, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblTotalNP, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                                 .addComponent(lblRecord2)
                                 .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(lblTotalOfRecords2, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblTotalP, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
         );
         gl_panel1.setVerticalGroup(
@@ -205,10 +200,10 @@ public class NightsManagerWindow extends JFrame {
                         .addGroup(gl_panel1.createSequentialGroup()
                                 .addContainerGap(13, Short.MAX_VALUE)
                                 .addGroup(gl_panel1.createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(lblRecord)
-                                        .addComponent(lblTotalOfRecords)
+                                        .addComponent(lblTextp)
+                                        .addComponent(lblTotalNP)
                                         .addComponent(lblRecord2)
-                                        .addComponent(lblTotalOfRecords2))
+                                        .addComponent(lblTotalP))
                                 .addContainerGap())
         );
         panel1.setLayout(gl_panel1);
@@ -321,6 +316,10 @@ public class NightsManagerWindow extends JFrame {
             };
             model.addRow(rowData);
         }
+        double totalPaid = NightService.calculateTotal(all, true);
+        double totalNoPaid = NightService.calculateTotal(all, false);
+        lblTotalP.setText(String.valueOf(totalPaid));
+        lblTotalNP.setText(String.valueOf(totalNoPaid));
     }
 
     public void setPaid(ActionEvent e) {
