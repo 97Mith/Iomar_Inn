@@ -18,7 +18,7 @@ public class NightService {
         try {
             NightRepository.create(nightEntity);
             JOptionPane.showMessageDialog(
-                    null, "Reserva criada!.",
+                    null, "Feito!.",
                     "Aviso", JOptionPane.INFORMATION_MESSAGE
             );
             return true;
